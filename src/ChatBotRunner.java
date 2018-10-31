@@ -13,9 +13,9 @@ public class ChatBotRunner
 	 */
 	public static void main(String[] args)
 	{
-		ChatBot1 chatbot1 = new ChatBot1();
-		ChatBot2 chatbot2 = new ChatBot2();
-		ChatBot3 chatbot3 = new ChatBot3();
+		LevinBot chatbot = new LevinBot();
+		UselessClassmate chatbot2 = new UselessClassmate();
+		UsefulClassmate chatbot3 = new UsefulClassmate();
 		
 
 		Scanner in = new Scanner (System.in);
@@ -26,11 +26,11 @@ public class ChatBotRunner
 		while (!statement.equals("Bye"))
 		{
 			//Use Logic to control which chatbot is handling the conversation\
-			//This example has only chatbot1
+			//This example has only chatbot
 
 
 
-			chatbot1.chatLoop(statement);
+			chatbot.chatLoop(statement);
 
 
 			statement = in.nextLine();
