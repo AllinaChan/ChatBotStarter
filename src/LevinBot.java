@@ -40,7 +40,7 @@ public class LevinBot
 	 */	
 	public String getGreeting()
 	{
-		return "Hi, what is up?";
+		return "Hey, what's up? Do you need help with anything?";
 	}
 	
 	/**
@@ -57,11 +57,12 @@ public class LevinBot
 		if (statement.length() == 0)
 		{
 			response = "Say something, please.";
+			emotion--;
 		}
 
 		else if (findKeyword(statement, "no") >= 0)
 		{
-			response = "Why so negative?";
+			response = "Then why are you bothering me...I have to grade your class's poorly written codes. Zeroes all around... *sigh*";
                 	emotion--;
 		}
 		
@@ -270,14 +271,14 @@ public class LevinBot
 	}
 	
 	private String [] randomNeutralResponses = {"Interesting, tell me more",
-			"Hmmm.",
+			"Beep, boop, I'm Levinn",
 			"Do you really think so?",
-			"You don't say.",
+			"No Strings attached",
 			"It's all boolean to me.",
-			"So, would you like to go for a walk?",
+			"Remember to add a runner class to your code!",
 			"Could you say that again?"
 	};
-	private String [] randomAngryResponses = {"Bahumbug.", "Harumph", "The rage consumes me!"};
-	private String [] randomHappyResponses = {"H A P P Y, what's that spell?", "Today is a good day", "You make me feel like a brand new pair of shoes."};
+	private String [] randomAngryResponses = {"Bahumbug.", "Harumph", ""};
+	private String [] randomHappyResponses = {"L", "Today is a good day", "You make me feel like a brand new pair of shoes."};
 	
 }
