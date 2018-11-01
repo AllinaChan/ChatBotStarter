@@ -19,7 +19,7 @@ public class LevinBot
 	public void chatLoop(String statement)
 	{
 		Scanner in = new Scanner (System.in);
-while (getGreeting(statement))
+		// while (getGreeting(statement))
 			System.out.println (getGreeting(statement));
 
 

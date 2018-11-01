@@ -41,7 +41,7 @@ public class UselessClassmate
 	 */	
 	public String getGreeting()
 	{
-		return "Ugh, why didn't you choose LevinBot? I'm playing League. What do you want?";
+		return "Ugh, why didn't you choose LevinBot?";
 	}
 	
 	/**
@@ -51,24 +51,43 @@ public class UselessClassmate
 	 *            the user statement
 	 * @return a response based on the rules given
 	 */
+	public boolean badBadWords(String statement)
+	{
+		for (int b = 0; b < badWords.length; b++)
+		{
+			if (findKeyword(statement, badWords[b]) >=0 )
+			{
+				return true;
+			}
+		}
+		return false; // after making badbadwords use it in getResponse
+	}
 	public String getResponse(String statement)
 	{
 		String response = "";
-		
-		if (statement.length() == 0)
+		for (int b = 0; b < badWords.length; b++)
+		{
+			if (findKeyword(statement, badWords[b]) >=0 )
+			{
+				response = "How could you use such vulgar language?! Apologize or else!";
+			}
+
+		}
+
+		if (statement.length() == 0 && response.length() == 0)
 		{
 			response = "Stop wasting my time. I'm trying to play League.";
 		}
 
 		else if (findKeyword(statement, "no") >= 0)
 		{
-			response = "Yasso AFK. Say something damn it.";
+			response = "Yasso AFK. Say something before I act like my character and assassinate you.";
                 	emotion--;
 		}
 		
 		else if (findKeyword(statement, "levin") >= 0)
 		{
-			response = "More like LevinTheDream amiright?";
+			response = "I need a little levin tonight myself.";
 			emotion++;
 		}
 		else if (findKeyword(statement, "league") >= 0)
@@ -88,7 +107,7 @@ public class UselessClassmate
 		}
 		else if (findKeyword(statement, "class") >= 0)
 		{
-			response = "The only class I care about is assassin";
+			response = "The only class I care about is assassin.";
 		}
 
 
@@ -101,7 +120,7 @@ public class UselessClassmate
 		{
 			response = transformIWantStatement(statement);
 		}	
-		else
+		else if(response.length() == 0)
 		{
 			response = getRandomResponse();
 		}
@@ -288,7 +307,8 @@ public class UselessClassmate
 			"So, would you like to go for a walk?",
 			"Could you say that again?"
 	};
-	private String [] randomAngryResponses = {"Arrgh just died. It's your fault", "Crowd Control?! really?! How dare you! I'm the 17 year old piece of gold.", "Die rebel scum!"};
+	private String [] randomAngryResponses = {"Arrgh just died. It's your fault!", "Crowd Control?! really?! How dare you! I'm the 17 year old piece of gold.", "Die rebel scum!"};
 	private String [] randomHappyResponses = {"Haha, Free kill.", "Today is a good day for Lintmaker", "You make me feel so young. You make me feel like spring has sprung."};
-	
+	private String [] badWords = {"poop", "damn", "butt", "fart", "burp", "bastard", "evil", "face"};
+	private String [] apology = {"Sorry", "sorry", "apologize"};
 }
