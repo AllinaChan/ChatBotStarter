@@ -19,7 +19,9 @@ public class LevinBot
 	public void chatLoop(String statement)
 	{
 		Scanner in = new Scanner (System.in);
-		System.out.println (getGreeting());
+while (getGreeting(statement))
+			System.out.println (getGreeting(statement));
+
 
 
 		while (!statement.equals("Bye"))
@@ -38,8 +40,11 @@ public class LevinBot
 	 * Get a default greeting 	
 	 * @return a greeting
 	 */	
-	public String getGreeting()
-	{
+	public String getGreeting(String statement) {
+		if (findKeyword(statement, "Hi") <0 || (findKeyword(statement, "Hello")<0 ||findKeyword(statement, "Greetings")<0 || (findKeyword(statement, "Sup")<0))) {
+			return "You need to say hi back";
+
+		}
 		return "Hey, what's up? Do you need help with anything?";
 	}
 	
@@ -76,7 +81,7 @@ public class LevinBot
 			response = "Watch your backpacks, Mr. Folwell doesn't fall well.";
 			emotion++;
 		}
-		else if (findKeyword(statement, "goldman") >= 0)
+		else if (findKeyword(statement, "") >= 0)
 		{
 			response = "Go for the gold, man.";
 			emotion++;
@@ -90,7 +95,7 @@ public class LevinBot
 		else if (findKeyword(statement, "I want",0) >= 0)
 		{
 			response = transformIWantStatement(statement);
-		}	
+		}
 		else
 		{
 			response = getRandomResponse();
@@ -263,7 +268,7 @@ public class LevinBot
 		{	
 			return randomNeutralResponses [r.nextInt(randomNeutralResponses.length)];
 		}
-		if (emotion < 0)
+		if (emotion < 5)
 		{	
 			return randomAngryResponses [r.nextInt(randomAngryResponses.length)];
 		}	
@@ -276,9 +281,10 @@ public class LevinBot
 			"No Strings attached",
 			"It's all boolean to me.",
 			"Remember to add a runner class to your code!",
-			"Could you say that again?"
+			"Could you say that again?",
+			"Hm...Zero or A hundred?"
 	};
-	private String [] randomAngryResponses = {"Bahumbug.", "Harumph", ""};
-	private String [] randomHappyResponses = {"L", "Today is a good day", "You make me feel like a brand new pair of shoes."};
+	private String [] randomAngryResponses = {"WORK ON YOUR LAB...", "Harumph", "Rawr!", "Don't bother me."};
+	private String [] randomHappyResponses = {"Just LevinTheDream *wink*", "Today is a good day", "AHHH, WITH THE POWER OF CODING...IM UNSTOPPABLE!", "I might just give this one a full score!"};
 	
 }
