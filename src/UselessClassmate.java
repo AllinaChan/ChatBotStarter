@@ -41,7 +41,7 @@ public class UselessClassmate
 	 */	
 	public String getGreeting()
 	{
-		return "Ugh, why didn't you ask the other guy?";
+		return "Ugh, why didn't you choose LevinBot? I'm playing League. What do you want?";
 	}
 	
 	/**
@@ -62,7 +62,7 @@ public class UselessClassmate
 
 		else if (findKeyword(statement, "no") >= 0)
 		{
-			response = "Missfortune AFK.";
+			response = "Yasso AFK. Say something damn it.";
                 	emotion--;
 		}
 		
@@ -71,6 +71,26 @@ public class UselessClassmate
 			response = "More like LevinTheDream amiright?";
 			emotion++;
 		}
+		else if (findKeyword(statement, "league") >= 0)
+		{
+			response = "Trying to get to diamond in ranked. I'm in a league of my own here.";
+			emotion--;
+		}
+		else if (findKeyword(statement, "useless") >= 0)
+		{
+			response = "You get you didn't pay for.";
+			emotion = 0;
+		}
+		else if (findKeyword(statement, "help") >= 0)
+		{
+			response = "I told you to ask the other guy. What?";
+			emotion--;
+		}
+		else if (findKeyword(statement, "class") >= 0)
+		{
+			response = "The only class I care about is assassin";
+		}
+
 
 		// Response transforming I want to statement
 		else if (findKeyword(statement, "I want to", 0) >= 0)
@@ -260,15 +280,15 @@ public class UselessClassmate
 		return randomHappyResponses [r.nextInt(randomHappyResponses.length)];
 	}
 	
-	private String [] randomNeutralResponses = {"Interesting, tell me more",
-			"Hmmm.",
-			"Do you really think so?",
+	private String [] randomNeutralResponses = {"Burp.. Ahhhh.",
+			"Huh.",
+			"Zoned out a bit there.",
 			"You don't say.",
-			"It's all boolean to me.",
+			"If only.",
 			"So, would you like to go for a walk?",
 			"Could you say that again?"
 	};
-	private String [] randomAngryResponses = {"Bahumbug.", "Harumph", "The rage consumes me!"};
-	private String [] randomHappyResponses = {"H A P P Y, what's that spell?", "Today is a good day", "You make me feel like a brand new pair of shoes."};
+	private String [] randomAngryResponses = {"Arrgh just died. It's your fault", "Crowd Control?! really?! How dare you! I'm the 17 year old piece of gold.", "Die rebel scum!"};
+	private String [] randomHappyResponses = {"Haha, Free kill.", "Today is a good day for Lintmaker", "You make me feel so young. You make me feel like spring has sprung."};
 	
 }
