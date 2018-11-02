@@ -19,9 +19,11 @@ public class LevinBot
 	public void chatLoop(String statement)
 	{
 		Scanner in = new Scanner (System.in);
-		while (getGreeting(statement))
-			System.out.println (getGreeting(statement));
-
+		while (getGreeting(statement).equals("You need to say hi back")) {
+			System.out.println(getGreeting(statement));
+			statement=in.nextLine();
+		}
+		System.out.println(getGreeting(statement));
 
 
 		while (!statement.equals("Bye"))
@@ -41,10 +43,10 @@ public class LevinBot
 	 * @return a greeting
 	 */	
 	public String getGreeting(String statement) {
-		if (findKeyword(statement, "Hi") <0 || (findKeyword(statement, "Hello")<0 ||findKeyword(statement, "Greetings")<0 || (findKeyword(statement, "Sup")<0))) {
+		if  (findKeyword(statement, "Hi") ==-1 || (findKeyword(statement, "Hello")==-1 ||findKeyword(statement, "Greetings")==-1 || (findKeyword(statement, "Sup")==-1))) {
 			return "You need to say hi back";
-
 		}
+
 		return "Hey, what's up? Do you need help with anything?";
 	}
 	
@@ -71,9 +73,9 @@ public class LevinBot
                 	emotion--;
 		}
 		
-		else if (findKeyword(statement, "levin") >= 0)
+		else if (findKeyword(statement, "help") >= 0)
 		{
-			response = "More like LevinTheDream, amiright?";
+			response = "Sure I can help, just tell me when";
 			emotion++;
 		}
 		else if (findKeyword(statement, "folwell") >= 0)
@@ -261,19 +263,17 @@ public class LevinBot
 	 * Pick a default response to use if nothing else fits.
 	 * @return a non-committal string
 	 */
-	private String getRandomResponse ()
-	{
-		Random r = new Random ();
-		if (emotion == 0)
-		{	
-			return randomNeutralResponses [r.nextInt(randomNeutralResponses.length)];
+	private String getRandomResponse () {
+		Random r = new Random();
+		if (emotion == 0) {
+			return randomNeutralResponses[r.nextInt(randomNeutralResponses.length)];
 		}
-		if (emotion < 5)
-		{	
-			return randomAngryResponses [r.nextInt(randomAngryResponses.length)];
-		}	
-		return randomHappyResponses [r.nextInt(randomHappyResponses.length)];
+		if (emotion < 5) {
+			return randomAngryResponses[r.nextInt(randomAngryResponses.length)];
+		}
+		return randomHappyResponses[r.nextInt(randomHappyResponses.length)];
 	}
+
 	
 	private String [] randomNeutralResponses = {"Interesting, tell me more",
 			"Beep, boop, I'm Levinn",
@@ -288,3 +288,47 @@ public class LevinBot
 	private String [] randomHappyResponses = {"Just LevinTheDream *wink*", "Today is a good day", "AHHH, WITH THE POWER OF CODING...IM UNSTOPPABLE!", "I might just give this one a full score!"};
 	
 }
+
+///**
+// * A program to carry on conversations with a human user.
+// * This version:
+// * @author Brooklyn Tech CS Department
+// * @version September 2018
+// */
+//public class UsefulClassmate
+//{
+//	//emotion can alter the way our bot responds. Emotion can become more negative or positive over time.
+//	int emotion = 0;
+//
+//
+//
+//	/**
+//	 * Runs the conversation for this particular chatbot, should allow switching to other chatbots.
+//	 * @param statement the statement typed by the user
+//	 */
+//	public void chatLoop(String statement)
+//	{
+//		Scanner in = new Scanner (System.in);
+//		System.out.println (getGreeting());
+//
+//
+//		while (!statement.equals("Bye"))
+//		{
+//
+//
+//			statement = in.nextLine();
+//			//getResponse handles the user reply
+//			System.out.println(getResponse(statement));
+//
+//
+//		}
+//
+//	}
+//	/**
+//	 * Get a default greeting
+//	 * @return a greeting
+//	 */
+//	public String getGreeting()
+//	{
+//		return "Hi, what is up?";
+//	}
