@@ -1,6 +1,7 @@
 import java.util.Random;
 import java.util.Scanner;
 
+
 /**
  * A program to carry on conversations with a human user.
  * This version:
@@ -19,11 +20,18 @@ public class LevinBot
 	public void chatLoop(String statement)
 	{
 		Scanner in = new Scanner (System.in);
-		while (getGreeting(statement).equals("You need to say hi back")) {
-			System.out.println(getGreeting(statement));
+		String greeting="";
+		while (!greeting.equals("Hey, what's up? Do you need help with anything?")) {
+			greeting=getGreeting(statement);
+			if(greeting.equals("Hey, what's up? Do you need help with anything?")) //Hey, what's up return greeting repeats twice. This is to ensure that that doesn't happen
+			{
+				continue;
+			}
+			System.out.println(greeting);
 			statement=in.nextLine();
+
 		}
-		System.out.println(getGreeting(statement));
+		System.out.println(greeting);
 
 
 		while (!statement.equals("Bye"))
@@ -39,20 +47,33 @@ public class LevinBot
 
 	}
 	/**
-	 * Get a default greeting 	
+	 * Get a default greeting
 	 * @return a greeting
-	 */	
+	 */
 	public String getGreeting(String statement) {
-		if  (findKeyword(statement, "Hi") ==-1 || (findKeyword(statement, "Hello")==-1 ||findKeyword(statement, "Greetings")==-1 || (findKeyword(statement, "Sup")==-1))) {
-			return "You need to say hi back";
+		boolean noGreeting=false;
+		statement=statement.toLowerCase();
+		for (String val: humanGreetings)
+		{
+			if (findKeyword(statement, val) == -1) {
+				noGreeting = true;
+			}
+			if (findKeyword(statement, val) >= 0){
+				noGreeting=false;
+				break;
+			}
 		}
 
-		return "Hey, what's up? Do you need help with anything?";
+		if  (noGreeting==true) {
+			return "You need to say hi back";
+		} else {
+			return "Hey, what's up? Do you need help with anything?";
+		}
 	}
-	
+
 	/**
 	 * Gives a response to a user statement
-	 * 
+	 *
 	 * @param statement
 	 *            the user statement
 	 * @return a response based on the rules given
@@ -60,7 +81,7 @@ public class LevinBot
 	public String getResponse(String statement)
 	{
 		String response = "";
-		
+
 		if (statement.length() == 0)
 		{
 			response = "Say something, please.";
@@ -70,9 +91,9 @@ public class LevinBot
 		else if (findKeyword(statement, "no") >= 0)
 		{
 			response = "Then why are you bothering me...I have to grade your class's poorly written codes. Zeroes all around... *sigh*";
-                	emotion--;
+			emotion--;
 		}
-		
+
 		else if (findKeyword(statement, "help") >= 0)
 		{
 			response = "Sure I can help, just tell me when";
@@ -83,9 +104,9 @@ public class LevinBot
 			response = "Watch your backpacks, Mr. Folwell doesn't fall well.";
 			emotion++;
 		}
-		else if (findKeyword(statement, "") >= 0)
+		else if (findKeyword(statement, "bye") >= 0)
 		{
-			response = "Go for the gold, man.";
+			response = "Bye bye!";
 			emotion++;
 		}
 
@@ -102,12 +123,42 @@ public class LevinBot
 		{
 			response = getRandomResponse();
 		}
-		
+
 		return response;
 	}
-	
+/*
+	public String getGoogleSearch (String statement)
+	{
+		statement = statement.trim();
+		String lastChar = statement.substring(statement.length() - 1);
+		if (lastChar.equals(".") ||lastChar.equals("?")||lastChar.equals("!"))
+		{
+			statement = statement.substring(0, statement.length() - 1);
+		}
+		int psn = findKeyword (statement, "I want to", 0);
+		String restOfStatement = statement.substring(psn + 9).trim();
+		Document doc;
+		try{
+			doc = Jsoup.connect("https://www.google.com/search?q="+restOfStatement).userAgent("Chrome").ignoreHttpErrors(true).timeout(0).get();
+			Elements links = doc.select("li[class=g]");
+			for (Element link : links) {
+				Elements titles = link.select("h3[class=r]");
+				String title = titles.text();
+
+				Elements bodies = link.select("span[class=st]");
+				String body = bodies.text();
+
+				System.out.println("Title: "+title);
+				System.out.println("Body: "+body+"\n");
+			}
+		}
+		catch (IOException e) {
+			e.printStackTrace();7
+		}
+	}
+	*/
 	/**
-	 * Take a statement with "I want to <something>." and transform it into 
+	 * Take a statement with "I want to <something>." and transform it into
 	 * "Why do you want to <something>?"
 	 * @param statement the user statement, assumed to contain "I want to"
 	 * @return the transformed statement
@@ -128,9 +179,9 @@ public class LevinBot
 		return "Why do you want to " + restOfStatement + "?";
 	}
 
-	
+
 	/**
-	 * Take a statement with "I want <something>." and transform it into 
+	 * Take a statement with "I want <something>." and transform it into
 	 * "Would you really be happy if you had <something>?"
 	 * @param statement the user statement, assumed to contain "I want"
 	 * @return the transformed statement
@@ -150,10 +201,10 @@ public class LevinBot
 		String restOfStatement = statement.substring(psn + 6).trim();
 		return "Would you really be happy if you had " + restOfStatement + "?";
 	}
-	
-	
+
+
 	/**
-	 * Take a statement with "I <something> you" and transform it into 
+	 * Take a statement with "I <something> you" and transform it into
 	 * "Why do you <something> me?"
 	 * @param statement the user statement, assumed to contain "I" followed by "you"
 	 * @return the transformed statement
@@ -169,17 +220,17 @@ public class LevinBot
 			statement = statement.substring(0, statement
 					.length() - 1);
 		}
-		
+
 		int psnOfI = findKeyword (statement, "I", 0);
 		int psnOfYou = findKeyword (statement, "you", psnOfI);
-		
+
 		String restOfStatement = statement.substring(psnOfI + 1, psnOfYou).trim();
 		return "Why do you " + restOfStatement + " me?";
 	}
-	
 
-	
-	
+
+
+
 	/**
 	 * Search for one word in phrase. The search is not case
 	 * sensitive. This method will check that the given goal
@@ -197,7 +248,7 @@ public class LevinBot
 	 *         statement or -1 if it's not found
 	 */
 	private int findKeyword(String statement, String goal,
-			int startPos)
+							int startPos)
 	{
 		String phrase = statement.trim().toLowerCase();
 		goal = goal.toLowerCase();
@@ -228,9 +279,9 @@ public class LevinBot
 			// found the word
 			if (((before.compareTo("a") < 0) || (before
 					.compareTo("z") > 0)) // before is not a
-											// letter
+					// letter
 					&& ((after.compareTo("a") < 0) || (after
-							.compareTo("z") > 0)))
+					.compareTo("z") > 0)))
 			{
 				return psn;
 			}
@@ -243,11 +294,11 @@ public class LevinBot
 
 		return -1;
 	}
-	
+
 	/**
 	 * Search for one word in phrase.  The search is not case sensitive.
 	 * This method will check that the given goal is not a substring of a longer string
-	 * (so, for example, "I know" does not contain "no").  The search begins at the beginning of the string.  
+	 * (so, for example, "I know" does not contain "no").  The search begins at the beginning of the string.
 	 * @param statement the string to search
 	 * @param goal the string to search for
 	 * @return the index of the first occurrence of goal in statement or -1 if it's not found
@@ -256,7 +307,7 @@ public class LevinBot
 	{
 		return findKeyword (statement, goal, 0);
 	}
-	
+
 
 
 	/**
@@ -274,7 +325,7 @@ public class LevinBot
 		return randomHappyResponses[r.nextInt(randomHappyResponses.length)];
 	}
 
-	
+	private String [] humanGreetings={"hello", "hi","sup","hola", "bonjour", "yo", "hey"};
 	private String [] randomNeutralResponses = {"Interesting, tell me more",
 			"Beep, boop, I'm Levinn",
 			"Do you really think so?",
@@ -284,51 +335,7 @@ public class LevinBot
 			"Could you say that again?",
 			"Hm...Zero or A hundred?"
 	};
-	private String [] randomAngryResponses = {"WORK ON YOUR LAB...", "Harumph", "Rawr!", "Don't bother me."};
+	private String [] randomAngryResponses = {"WORK ON YOUR LAB...", "Harumph", "Rawr!", "Don't bother me.", "My wrath has been incurred"};
 	private String [] randomHappyResponses = {"Just LevinTheDream *wink*", "Today is a good day", "AHHH, WITH THE POWER OF CODING...IM UNSTOPPABLE!", "I might just give this one a full score!"};
-	
-}
 
-///**
-// * A program to carry on conversations with a human user.
-// * This version:
-// * @author Brooklyn Tech CS Department
-// * @version September 2018
-// */
-//public class UsefulClassmate
-//{
-//	//emotion can alter the way our bot responds. Emotion can become more negative or positive over time.
-//	int emotion = 0;
-//
-//
-//
-//	/**
-//	 * Runs the conversation for this particular chatbot, should allow switching to other chatbots.
-//	 * @param statement the statement typed by the user
-//	 */
-//	public void chatLoop(String statement)
-//	{
-//		Scanner in = new Scanner (System.in);
-//		System.out.println (getGreeting());
-//
-//
-//		while (!statement.equals("Bye"))
-//		{
-//
-//
-//			statement = in.nextLine();
-//			//getResponse handles the user reply
-//			System.out.println(getResponse(statement));
-//
-//
-//		}
-//
-//	}
-//	/**
-//	 * Get a default greeting
-//	 * @return a greeting
-//	 */
-//	public String getGreeting()
-//	{
-//		return "Hi, what is up?";
-//	}
+}
