@@ -1,5 +1,15 @@
+
 import java.util.Random;
 import java.util.Scanner;
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 
 /**
@@ -126,37 +136,20 @@ public class LevinBot
 
 		return response;
 	}
-/*
-	public String getGoogleSearch (String statement)
-	{
+
+	//Google Search Levin Bot
+
+	//"How do you" search
+	public String getGoogleSearch (String statement) {
 		statement = statement.trim();
 		String lastChar = statement.substring(statement.length() - 1);
-		if (lastChar.equals(".") ||lastChar.equals("?")||lastChar.equals("!"))
-		{
+		if (lastChar.equals(".") || lastChar.equals("?") || lastChar.equals("!")) {
 			statement = statement.substring(0, statement.length() - 1);
 		}
-		int psn = findKeyword (statement, "I want to", 0);
-		String restOfStatement = statement.substring(psn + 9).trim();
-		Document doc;
-		try{
-			doc = Jsoup.connect("https://www.google.com/search?q="+restOfStatement).userAgent("Chrome").ignoreHttpErrors(true).timeout(0).get();
-			Elements links = doc.select("li[class=g]");
-			for (Element link : links) {
-				Elements titles = link.select("h3[class=r]");
-				String title = titles.text();
-
-				Elements bodies = link.select("span[class=st]");
-				String body = bodies.text();
-
-				System.out.println("Title: "+title);
-				System.out.println("Body: "+body+"\n");
-			}
-		}
-		catch (IOException e) {
-			e.printStackTrace();7
-		}
+		int psn = findKeyword(statement, "How do you", 0);
+		String restOfStatement = statement.substring(psn + 10).trim();
+		return"";
 	}
-	*/
 	/**
 	 * Take a statement with "I want to <something>." and transform it into
 	 * "Why do you want to <something>?"
