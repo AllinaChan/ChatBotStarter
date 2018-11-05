@@ -73,6 +73,16 @@ public class UselessClassmate
 			}
 
 		}
+        Scanner news = new Scanner(System.in);
+		while (response == "How could you use such vulgar language?! Apologize or else!")
+        {
+			System.out.print("Say you're sorry");
+            statement = news.nextLine();
+            if (statement.equals("Sorry"))
+			{
+				response = "You are forgiven";
+			}
+		}
 
 		if (statement.length() == 0 && response.length() == 0)
 		{
@@ -116,9 +126,9 @@ public class UselessClassmate
 		{
 			response = transformIWantToStatement(statement);
 		}
-		else if (findKeyword(statement, "I want",0) >= 0)
+		else if (findKeyword(statement, "How could you",0) >= 0)
 		{
-			response = transformIWantStatement(statement);
+			response = transformHowCouldYouStatement(statement);
 		}	
 		else if(response.length() == 0)
 		{
@@ -138,18 +148,28 @@ public class UselessClassmate
 	{
 		//  Remove the final period, if there is one
 		statement = statement.trim();
-		String lastChar = statement.substring(statement
-				.length() - 1);
+		String lastChar = statement.substring(statement.length() - 1);
 		if (lastChar.equals("."))
 		{
-			statement = statement.substring(0, statement
-					.length() - 1);
+			statement = statement.substring(0, statement.length() - 1);
 		}
 		int psn = findKeyword (statement, "I want to", 0);
 		String restOfStatement = statement.substring(psn + 9).trim();
 		return "Why do you want to " + restOfStatement + "?";
 	}
+	private String transformHowCouldYouStatement(String statement)
+	{
 
+		statement = statement.trim();
+		String Pun = statement.substring(statement.length() - 1);
+		if (Pun.equals("?"))
+		{
+			statement = statement.substring(0, statement.length() - 1);
+		}
+		int psnofHow = findKeyword (statement, "How could you", 0);
+		String restOfStatement = statement.substring(psnofHow+13).trim();
+		return "I could " + restOfStatement + " as many times as I want.";
+	}
 	
 	/**
 	 * Take a statement with "I want <something>." and transform it into 
@@ -172,7 +192,6 @@ public class UselessClassmate
 		String restOfStatement = statement.substring(psn + 6).trim();
 		return "Would you really be happy if you had " + restOfStatement + "?";
 	}
-	
 	
 	/**
 	 * Take a statement with "I <something> you" and transform it into 
@@ -198,7 +217,7 @@ public class UselessClassmate
 		String restOfStatement = statement.substring(psnOfI + 1, psnOfYou).trim();
 		return "Why do you " + restOfStatement + " me?";
 	}
-	
+
 
 	
 	
@@ -310,5 +329,4 @@ public class UselessClassmate
 	private String [] randomAngryResponses = {"Arrgh just died. It's your fault!", "Crowd Control?! really?! How dare you! I'm the 17 year old piece of gold.", "Die rebel scum!"};
 	private String [] randomHappyResponses = {"Haha, Free kill.", "Today is a good day for Lintmaker", "You make me feel so young. You make me feel like spring has sprung."};
 	private String [] badWords = {"poop", "damn", "butt", "fart", "burp", "bastard", "evil", "face"};
-	private String [] apology = {"Sorry", "sorry", "apologize"};
 }
