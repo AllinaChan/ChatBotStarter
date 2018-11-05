@@ -121,6 +121,10 @@ public class LevinBot
 		}
 
 		// Response transforming I want to statement
+		else if (findKeyword(statement, "How do you", 0) >= 0)
+		{
+			 response  = getDataFromGoogle(statement);
+		}
 		else if (findKeyword(statement, "I want to", 0) >= 0)
 		{
 			response = transformIWantToStatement(statement);
@@ -140,7 +144,7 @@ public class LevinBot
 	//Google Search Levin Bot
 
 	//"How do you" search
-	public String getGoogleSearch (String statement) {
+	private String getSearchQuery (String statement) {
 		statement = statement.trim();
 		String lastChar = statement.substring(statement.length() - 1);
 		if (lastChar.equals(".") || lastChar.equals("?") || lastChar.equals("!")) {
@@ -148,8 +152,47 @@ public class LevinBot
 		}
 		int psn = findKeyword(statement, "How do you", 0);
 		String restOfStatement = statement.substring(psn + 10).trim();
-		return"";
+		return restOfStatement;
 	}
+
+
+     private String getDataFromGoogle(String statement) {
+
+		String result = "";
+		String request = "https://www.google.com/search?q=" + getSearchQuery(statement) + "&num=20";
+		System.out.println("Sending request..." + request);
+
+		try {
+
+			// need http protocol, set this as a Google bot agent :)
+			Document doc = Jsoup
+					.connect(request)
+					.userAgent(
+							"Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)")
+					.timeout(5000).get();
+
+			// get all links
+			Elements links = doc.select("a[href]");
+			for (Element link : links) {
+
+				String temp = link.attr("href");
+				if(temp.startsWith("/url?q=")){
+					//use regex to get domain name
+					result = result +" " +temp;
+				}
+
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+
+
+
 	/**
 	 * Take a statement with "I want to <something>." and transform it into
 	 * "Why do you want to <something>?"
