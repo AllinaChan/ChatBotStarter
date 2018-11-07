@@ -51,19 +51,10 @@ public class UselessClassmate
 	 *            the user statement
 	 * @return a response based on the rules given
 	 */
-	public boolean badBadWords(String statement)
-	{
-		for (int b = 0; b < badWords.length; b++)
-		{
-			if (findKeyword(statement, badWords[b]) >=0 )
-			{
-				return true;
-			}
-		}
-		return false; // after making badbadwords use it in getResponse
-	}
+
 	public String getResponse(String statement)
 	{
+
 		String response = "";
 		for (int b = 0; b < badWords.length; b++)
 		{
@@ -74,9 +65,10 @@ public class UselessClassmate
 
 		}
         Scanner news = new Scanner(System.in);
-		while (response == "How could you use such vulgar language?! Apologize or else!")
+		while (response.equals("How could you use such vulgar language?! Apologize or else!"))
         {
-			System.out.print("Say you're sorry");
+			System.out.print("Say you're sorry. It'll repeat until you are." + " How could you say " + statement +
+					" and not Sorry" + ".");
             statement = news.nextLine();
             if (statement.equals("Sorry"))
 			{
@@ -87,6 +79,7 @@ public class UselessClassmate
 		if (statement.length() == 0 && response.length() == 0)
 		{
 			response = "Stop wasting my time. I'm trying to play League.";
+			emotion--;
 		}
 
 		else if (findKeyword(statement, "no") >= 0)
@@ -108,7 +101,7 @@ public class UselessClassmate
 		else if (findKeyword(statement, "useless") >= 0)
 		{
 			response = "You get you didn't pay for.";
-			emotion = 0;
+			emotion --;
 		}
 		else if (findKeyword(statement, "help") >= 0)
 		{
@@ -118,9 +111,23 @@ public class UselessClassmate
 		else if (findKeyword(statement, "class") >= 0)
 		{
 			response = "The only class I care about is assassin.";
+			emotion--;
 		}
 
+		if ( emotion <= -3)
+		{
 
+			System.out.println("Now you've made me mad");
+			response = "Now you've made me mad";
+			if (response.equals ("Now you've made me mad"))
+			{
+					double r = Math.random();
+					r = r * 10;
+					response = "You " + badWords[(int) r] + "";
+					System.out.print(response);
+					emotion = 0;
+			}
+		}
 		// Response transforming I want to statement
 		else if (findKeyword(statement, "I want to", 0) >= 0)
 		{
@@ -134,7 +141,11 @@ public class UselessClassmate
 		{
 			response = getRandomResponse();
 		}
-		
+		else if (findKeyword(statement, "I want",0) >= 0)
+		{
+			response = transformIWantStatement(statement) ;
+		}
+
 		return response;
 	}
 	
@@ -328,5 +339,5 @@ public class UselessClassmate
 	};
 	private String [] randomAngryResponses = {"Arrgh just died. It's your fault!", "Crowd Control?! really?! How dare you! I'm the 17 year old piece of gold.", "Die rebel scum!"};
 	private String [] randomHappyResponses = {"Haha, Free kill.", "Today is a good day for Lintmaker", "You make me feel so young. You make me feel like spring has sprung."};
-	private String [] badWords = {"poop", "damn", "butt", "fart", "burp", "bastard", "evil", "face"};
+	private String [] badWords = {"poop", "butt", "fart", "bastard", "evil", "face", "buttface", "heck", "dummy", "chickenhead"};
 }
