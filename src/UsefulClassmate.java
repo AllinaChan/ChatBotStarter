@@ -42,7 +42,7 @@ public class UsefulClassmate
 	 */	
 	public String getGreeting()
 	{
-		return "Hi, what is up?";
+		return "Hi, my name is Byron, the useful classmate.";
 	}
 	
 	/**
@@ -58,18 +58,18 @@ public class UsefulClassmate
 		
 		if (statement.length() == 0)
 		{
-			response = "Say something, please.";
+			response = "Yo, don't ignore me please.";
 		}
 
 		else if (findKeyword(statement, "no") >= 0)
 		{
-			response = "Why so negative?";
+			response = "What happened, failed your test? It's ok, sit next to me on the next one.";
                 	emotion--;
 		}
 		
-		else if (findKeyword(statement, "levin") >= 0)
+		else if (findKeyword(statement, "Help") >= 0)
 		{
-			response = "More like LevinTheDream amiright?";
+			response = "Yep, I'll be always here for you.";
 			emotion++;
 		}
 
@@ -81,7 +81,11 @@ public class UsefulClassmate
 		else if (findKeyword(statement, "I want",0) >= 0)
 		{
 			response = transformIWantStatement(statement);
-		}	
+		}
+		else if (findKeyword(statement, "I need", 0) >=0)
+		{
+			response = transformINeedStatement(statement);
+		}
 		else
 		{
 			response = getRandomResponse();
@@ -89,7 +93,24 @@ public class UsefulClassmate
 		
 		return response;
 	}
-	
+
+	private String transformINeedStatement(String statement)
+	{
+		//  Remove the final period, if there is one
+		statement = statement.trim();
+		String lastChar = statement.substring(statement
+				.length() - 1);
+		if (lastChar.equals("."))
+		{
+			statement = statement.substring(0, statement
+					.length() - 1);
+		}
+		int psn = findKeyword (statement, "I need", 0);
+		String restOfStatement = statement.substring(psn + 6).trim();
+		return "Why do you need " + restOfStatement + "?";
+	}
+
+
 	/**
 	 * Take a statement with "I want to <something>." and transform it into 
 	 * "Why do you want to <something>?"
@@ -261,15 +282,15 @@ public class UsefulClassmate
 		return randomHappyResponses [r.nextInt(randomHappyResponses.length)];
 	}
 	
-	private String [] randomNeutralResponses = {"Interesting, tell me more",
-			"Hmmm.",
-			"Do you really think so?",
-			"You don't say.",
-			"It's all boolean to me.",
-			"So, would you like to go for a walk?",
-			"Could you say that again?"
+	private String [] randomNeutralResponses = {"Keep going.",
+			"Hmm...",
+			"Look at it again",
+			"Write it out on paper",
+			"Google it.",
+			"Clarify on what you mean.",
+			"This is interesting."
 	};
-	private String [] randomAngryResponses = {"Bahumbug.", "Harumph", "The rage consumes me!"};
-	private String [] randomHappyResponses = {"H A P P Y, what's that spell?", "Today is a good day", "You make me feel like a brand new pair of shoes."};
+	private String [] randomAngryResponses = {"Come on dude. I did that in 5 minutes.", "Did you really just ask me that?", "I don't usually have anger issues, but now I do."};
+	private String [] randomHappyResponses = {"Whats the problem on?", "asadad", "Good job mate."};
 	
 }
