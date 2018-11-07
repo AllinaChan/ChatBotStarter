@@ -1,15 +1,13 @@
-
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
 
 
 /**
@@ -123,7 +121,8 @@ public class LevinBot
 		// Response transforming I want to statement
 		else if (findKeyword(statement, "How do you", 0) >= 0)
 		{
-			 response  = getDataFromGoogle(statement);
+			 ArrayList<String> googleResults  =new ArrayList<>();
+                     googleResults = getDataFromGoogle(statement);
 		}
 		else if (findKeyword(statement, "I want to", 0) >= 0)
 		{
@@ -141,54 +140,46 @@ public class LevinBot
 		return response;
 	}
 
-	//Google Search Levin Bot
+
 
 	//"How do you" search
-	private String getSearchQuery (String statement) {
-		statement = statement.trim();
-		String lastChar = statement.substring(statement.length() - 1);
-		if (lastChar.equals(".") || lastChar.equals("?") || lastChar.equals("!")) {
-			statement = statement.substring(0, statement.length() - 1);
-		}
-		int psn = findKeyword(statement, "How do you", 0);
-		String restOfStatement = statement.substring(psn + 10).trim();
-		return restOfStatement;
-	}
+
+	public ArrayList<String> getDataFromGoogle(String statement)
+    {
+        statement = statement.trim();
+        String lastChar = statement.substring(statement.length() - 1);
+        if (lastChar.equals(".") || lastChar.equals("?") || lastChar.equals("!")) {
+            statement = statement.substring(0, statement.length() - 1);
+        }
+        int psn = findKeyword(statement, "How do you", 0);
+        String restOfStatement = statement.substring(psn + 10).trim();
 
 
-     private String getDataFromGoogle(String statement) {
+        Document doc = null;
+        ArrayList<String> titleAndUrl= new ArrayList<>();
 
-		String result = "";
-		String request = "https://www.google.com/search?q=" + getSearchQuery(statement) + "&num=20";
-		System.out.println("Sending request..." + request);
+        try {
+            doc = Jsoup.connect("https://www.google.com/search?q=" + restOfStatement).get();
 
-		try {
+            String title = doc.title();
+            titleAndUrl.add("Title: " + title);
 
-			// need http protocol, set this as a Google bot agent :)
-			Document doc = Jsoup
-					.connect(request)
-					.userAgent(
-							"Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)")
-					.timeout(5000).get();
+            Elements links = doc.select("a[href]");
 
-			// get all links
-			Elements links = doc.select("a[href]");
-			for (Element link : links) {
+            for (Element link : links) {
+                titleAndUrl.add("\nLink: " + link.attr("href"));
+                titleAndUrl.add("Text: " + link.text());
+            }
+        } catch (IOException e)
+        {
+            //TODO Auto-generated catch
+            e.printStackTrace();
+        }
+        return titleAndUrl;
+    }
 
-				String temp = link.attr("href");
-				if(temp.startsWith("/url?q=")){
-					//use regex to get domain name
-					result = result +" " +temp;
-				}
 
-			}
 
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return result;
-	}
 
 
 
@@ -369,7 +360,6 @@ public class LevinBot
 			"It's all boolean to me.",
 			"Remember to add a runner class to your code!",
 			"Could you say that again?",
-			"Hm...Zero or A hundred?"
 	};
 	private String [] randomAngryResponses = {"WORK ON YOUR LAB...", "Harumph", "Rawr!", "Don't bother me.", "My wrath has been incurred"};
 	private String [] randomHappyResponses = {"Just LevinTheDream *wink*", "Today is a good day", "AHHH, WITH THE POWER OF CODING...IM UNSTOPPABLE!", "I might just give this one a full score!"};
