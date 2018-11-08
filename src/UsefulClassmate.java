@@ -55,6 +55,14 @@ public class UsefulClassmate
 	public String getResponse(String statement)
 	{
 		String response = "";
+		for (int b = 0; b < giveUp.length; b++)
+		{
+			if (findKeyword(statement, giveUp[b]) >=0 )
+			{
+				response = "I'll never let go Jack, and so shouldn't you.";
+			}
+
+		}
 		
 		if (statement.length() == 0)
 		{
@@ -78,13 +86,17 @@ public class UsefulClassmate
 		{
 			response = transformIWantToStatement(statement);
 		}
-		else if (findKeyword(statement, "I want",0) >= 0)
-		{
-			response = transformIWantStatement(statement);
-		}
 		else if (findKeyword(statement, "I need", 0) >=0)
 		{
 			response = transformINeedStatement(statement);
+		}
+		else if (findKeyword(statement, "I can't", 0) >=0)
+		{
+			response = transformICantStatement(statement);
+		}
+		else if (findKeyword(statement, "I don't get", 0) >=0)
+		{
+			response = transformIDontStatement(statement);
 		}
 		else
 		{
@@ -93,6 +105,12 @@ public class UsefulClassmate
 		
 		return response;
 	}
+	/**
+	 * Take a statement with "I need <something>." and transform it into
+	 * "Why do you need <something>?"
+	 * @param statement the user statement, assumed to contain "I need"
+	 * @return the transformed statement
+	 */
 
 	private String transformINeedStatement(String statement)
 	{
@@ -133,14 +151,37 @@ public class UsefulClassmate
 		return "Why do you want to " + restOfStatement + "?";
 	}
 
+
+	/**
+	 * Take a statement with "I can't <something>." and transform it into
+	 * "Wy you think you can't <something>? You got me!"
+	 * @param statement the user statement, assumed to contain "I can't"
+	 * @return the transformed statement
+	 */
+	private String transformICantStatement(String statement)
+	{
+		//  Remove the final period, if there is one
+		statement = statement.trim();
+		String lastChar = statement.substring(statement
+				.length() - 1);
+		if (lastChar.equals("."))
+		{
+			statement = statement.substring(0, statement
+					.length() - 1);
+		}
+		int psn = findKeyword (statement, "I can't", 0);
+		String restOfStatement = statement.substring(psn + 7).trim();
+		return "Why you think you can't " + restOfStatement + "? You got me!";
+	}
+
 	
 	/**
-	 * Take a statement with "I want <something>." and transform it into 
-	 * "Would you really be happy if you had <something>?"
+	 * Take a statement with "I don't <something>." and transform it into
+	 * "What don't you get <something>?"
 	 * @param statement the user statement, assumed to contain "I want"
 	 * @return the transformed statement
 	 */
-	private String transformIWantStatement(String statement)
+	private String transformIDontStatement(String statement)
 	{
 		//  Remove the final period, if there is one
 		statement = statement.trim();
@@ -151,36 +192,11 @@ public class UsefulClassmate
 			statement = statement.substring(0, statement
 					.length() - 1);
 		}
-		int psn = findKeyword (statement, "I want", 0);
-		String restOfStatement = statement.substring(psn + 6).trim();
-		return "Would you really be happy if you had " + restOfStatement + "?";
+		int psn = findKeyword (statement, "I don't get", 0);
+		String restOfStatement = statement.substring(psn + 11).trim();
+		return "What is it about " + restOfStatement + " you don't get?";
 	}
-	
-	
-	/**
-	 * Take a statement with "I <something> you" and transform it into 
-	 * "Why do you <something> me?"
-	 * @param statement the user statement, assumed to contain "I" followed by "you"
-	 * @return the transformed statement
-	 */
-	private String transformIYouStatement(String statement)
-	{
-		//  Remove the final period, if there is one
-		statement = statement.trim();
-		String lastChar = statement.substring(statement
-				.length() - 1);
-		if (lastChar.equals("."))
-		{
-			statement = statement.substring(0, statement
-					.length() - 1);
-		}
-		
-		int psnOfI = findKeyword (statement, "I", 0);
-		int psnOfYou = findKeyword (statement, "you", psnOfI);
-		
-		String restOfStatement = statement.substring(psnOfI + 1, psnOfYou).trim();
-		return "Why do you " + restOfStatement + " me?";
-	}
+
 	
 
 	
@@ -284,13 +300,14 @@ public class UsefulClassmate
 	
 	private String [] randomNeutralResponses = {"Keep going.",
 			"Hmm...",
-			"Look at it again",
+			"Look at it again.",
 			"Write it out on paper",
 			"Google it.",
 			"Clarify on what you mean.",
 			"This is interesting."
 	};
 	private String [] randomAngryResponses = {"Come on dude. I did that in 5 minutes.", "Did you really just ask me that?", "I don't usually have anger issues, but now I do."};
-	private String [] randomHappyResponses = {"Whats the problem on?", "asadad", "Good job mate."};
+	private String [] randomHappyResponses = {"Whats the problem on?", "Looking good so far.", "Good job mate.", "Yep, that's right."};
+	private String [] giveUp = {"yikes", "fuck", "ugh", "sigh"};
 	
 }
