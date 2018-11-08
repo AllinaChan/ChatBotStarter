@@ -34,7 +34,7 @@ public class ChatBotRunner
 		if (useurimmagination.equals("LevinBot"))
 		{
 			String statement = "";
-			while (!statement.equals("Bye"))a
+			while (!statement.equals("Bye"))
 			{
 				//Use Logic to control which chatbot is handling the conversation\
 				//This example has only chatbot
