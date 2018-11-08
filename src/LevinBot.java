@@ -27,6 +27,7 @@ public class LevinBot
 	 */
 	public void chatLoop(String statement)
 	{
+		System.out.println("Hey Levin Bot here!");
 		Scanner in = new Scanner (System.in);
 		String greeting="";
 		while (!greeting.equals("Hey, what's up? Do you need help with anything?")) {
@@ -121,8 +122,13 @@ public class LevinBot
 		// Response transforming I want to statement
 		else if (findKeyword(statement, "How do you", 0) >= 0)
 		{
-			 ArrayList<String> googleResults  =new ArrayList<>();
-                     googleResults = getDataFromGoogle(statement);
+			 ArrayList<String> googleResults  = getDataFromGoogle(statement);
+                     for (String val : googleResults)
+					 {
+					 	if (val.indexOf("https://")>=0 && val.indexOf("google")==-1) {
+							response += val + " ";
+						}
+					 }
 		}
 		else if (findKeyword(statement, "I want to", 0) >= 0)
 		{
@@ -144,18 +150,20 @@ public class LevinBot
 
 	//"How do you" search
 
+
+
 	public ArrayList<String> getDataFromGoogle(String statement)
     {
-        statement = statement.trim();
-        String lastChar = statement.substring(statement.length() - 1);
-        if (lastChar.equals(".") || lastChar.equals("?") || lastChar.equals("!")) {
-            statement = statement.substring(0, statement.length() - 1);
-        }
-        int psn = findKeyword(statement, "How do you", 0);
-        String restOfStatement = statement.substring(psn + 10).trim();
+		statement = statement.trim();
+		String lastChar = statement.substring(statement.length() - 1);
+		if (lastChar.equals(".") || lastChar.equals("?") || lastChar.equals("!")) {
+			statement = statement.substring(0, statement.length() - 1);
+		}
+		int psn = findKeyword(statement, "How do you", 0);
+		String restOfStatement = statement.substring(psn + 10).trim();
 
-
-        Document doc = null;
+		System.out.println("Let me just look around for the answer to your question");
+    	Document doc = null;
         ArrayList<String> titleAndUrl= new ArrayList<>();
 
         try {
@@ -163,12 +171,11 @@ public class LevinBot
 
             String title = doc.title();
             titleAndUrl.add("Title: " + title);
-
             Elements links = doc.select("a[href]");
 
-            for (Element link : links) {
+            for (Element link:links) {
+
                 titleAndUrl.add("\nLink: " + link.attr("href"));
-                titleAndUrl.add("Text: " + link.text());
             }
         } catch (IOException e)
         {
@@ -177,12 +184,6 @@ public class LevinBot
         }
         return titleAndUrl;
     }
-
-
-
-
-
-
 
 	/**
 	 * Take a statement with "I want to <something>." and transform it into
