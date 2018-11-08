@@ -119,7 +119,7 @@ public class UselessClassmate
 		if ( emotion <= -3)
 		{
 			System.out.println("Now you've made me mad");
-			response = ("You " + badWords[(int) r] + " ");
+			response = ("You " + badWords[(int) r] + ". ");
 			System.out.print(response);
 			emotion = 0;
 		}
