@@ -49,12 +49,14 @@ public class UselessClassmate
 	 * 
 	 * @param statement
 	 *            the user statement
+	 *            emotion: the value that is calculated and then responded to at a certain level
 	 * @return a response based on the rules given
 	 */
 
 	public String getResponse(String statement)
 	{
-
+		double r = Math.random();
+		r = r * 7;
 		String response = "";
 		for (int b = 0; b < badWords.length; b++)
 		{
@@ -70,7 +72,7 @@ public class UselessClassmate
 			System.out.print("Say you're sorry. It'll repeat until you are." + " How could you say " + statement +
 					" and not Sorry" + ".");
             statement = news.nextLine();
-            if (statement.equals("Sorry"))
+            if (findKeyword(statement, "Sorry") >=0)
 			{
 				response = "You are forgiven";
 			}
@@ -116,17 +118,10 @@ public class UselessClassmate
 
 		if ( emotion <= -3)
 		{
-
 			System.out.println("Now you've made me mad");
-			response = "Now you've made me mad";
-			if (response.equals ("Now you've made me mad"))
-			{
-					double r = Math.random();
-					r = r * 10;
-					response = "You " + badWords[(int) r] + "";
-					System.out.print(response);
-					emotion = 0;
-			}
+			response = ("You " + badWords[(int) r] + " ");
+			System.out.print(response);
+			emotion = 0;
 		}
 		// Response transforming I want to statement
 		else if (findKeyword(statement, "I want to", 0) >= 0)
@@ -168,6 +163,12 @@ public class UselessClassmate
 		String restOfStatement = statement.substring(psn + 9).trim();
 		return "Why do you want to " + restOfStatement + "?";
 	}
+
+	/**
+	 * When you say how could you something, it transforms it into "I could something as many times as I want.
+	 * @param statement what is typed, which would have How could you.
+	 * @return transformed statement
+	 */
 	private String transformHowCouldYouStatement(String statement)
 	{
 
@@ -339,5 +340,5 @@ public class UselessClassmate
 	};
 	private String [] randomAngryResponses = {"Arrgh just died. It's your fault!", "Crowd Control?! really?! How dare you! I'm the 17 year old piece of gold.", "Die rebel scum!"};
 	private String [] randomHappyResponses = {"Haha, Free kill.", "Today is a good day for Lintmaker", "You make me feel so young. You make me feel like spring has sprung."};
-	private String [] badWords = {"poop", "butt", "fart", "bastard", "evil", "face", "buttface", "heck", "dummy", "chickenhead"};
+	private String [] badWords = {"poop", "butt", "fart", "bastard", "buttface", "dummy", "chickenhead", "buttface", "evil", "Byrron", "stab"};
 }
