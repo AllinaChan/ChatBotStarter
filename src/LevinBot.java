@@ -8,7 +8,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-
+//Author: Allen Chen
 
 /**
  * A program to carry on conversations with a human user.
@@ -27,7 +27,6 @@ public class LevinBot
 	 */
 	public void chatLoop(String statement)
 	{
-		System.out.println("Hey Levin Bot here!");
 		Scanner in = new Scanner (System.in);
 		String greeting="";
 		while (!greeting.equals("Hey, what's up? Do you need help with anything?")) {
@@ -103,14 +102,26 @@ public class LevinBot
 			emotion--;
 		}
 
-		else if (findKeyword(statement, "help") >= 0)
+		else if (findKeyword(statement, "I need help with") >= 0)
 		{
-			response = "Sure I can help, just tell me when";
+			response = transformINeedHelpWithStatement(statement);
+			ArrayList<String> googleResults  = getDataFromGoogle(statement);
+			for (String val : googleResults)
+			{
+				if (val.indexOf("https://")>=0 && val.indexOf("google")==-1) {
+					response += val + " ";
+				}
+			}
 			emotion++;
 		}
 		else if (findKeyword(statement, "folwell") >= 0)
 		{
 			response = "Watch your backpacks, Mr. Folwell doesn't fall well.";
+			emotion++;
+		}
+		else if (findKeyword(statement, "test date") >= 0)
+		{
+			response = "The test will be whenever you want it to be ;) Just don't make it the day before the AP test";
 			emotion++;
 		}
 		else if (findKeyword(statement, "bye") >= 0)
@@ -122,13 +133,15 @@ public class LevinBot
 		// Response transforming I want to statement
 		else if (findKeyword(statement, "How do you", 0) >= 0)
 		{
-			 ArrayList<String> googleResults  = getDataFromGoogle(statement);
-                     for (String val : googleResults)
+			ArrayList<String> googleResults  = getDataFromGoogle(statement);
+			 for (String val : googleResults)
 					 {
 					 	if (val.indexOf("https://")>=0 && val.indexOf("google")==-1) {
 							response += val + " ";
 						}
 					 }
+					 System.out.println(" ");
+                     System.out.println("As a teacher, I won't give you the answers...Pfft, figure it out yourself.");
 		}
 		else if (findKeyword(statement, "I want to", 0) >= 0)
 		{
@@ -149,11 +162,8 @@ public class LevinBot
 
 
 	//"How do you" search
-
-
-
-	public ArrayList<String> getDataFromGoogle(String statement)
-    {
+	private String transformHowDoYouStatement(String statement)
+	{
 		statement = statement.trim();
 		String lastChar = statement.substring(statement.length() - 1);
 		if (lastChar.equals(".") || lastChar.equals("?") || lastChar.equals("!")) {
@@ -161,13 +171,20 @@ public class LevinBot
 		}
 		int psn = findKeyword(statement, "How do you", 0);
 		String restOfStatement = statement.substring(psn + 10).trim();
+		return restOfStatement;
+	}
+
+
+
+	public ArrayList<String> getDataFromGoogle(String statement)
+    {
 
 		System.out.println("Let me just look around for the answer to your question");
     	Document doc = null;
         ArrayList<String> titleAndUrl= new ArrayList<>();
 
         try {
-            doc = Jsoup.connect("https://www.google.com/search?q=" + restOfStatement).get();
+            doc = Jsoup.connect("https://www.google.com/search?q=" + transformHowDoYouStatement(statement)).get();
 
             String title = doc.title();
             titleAndUrl.add("Title: " + title);
@@ -184,6 +201,22 @@ public class LevinBot
         }
         return titleAndUrl;
     }
+
+	private String transformINeedHelpWithStatement(String statement)
+	{
+		//  Remove the final period, if there is one
+		statement = statement.trim();
+		String lastChar = statement.substring(statement
+				.length() - 1);
+		if (lastChar.equals("."))
+		{
+			statement = statement.substring(0, statement
+					.length() - 1);
+		}
+		int psn = findKeyword (statement, "I need help with", 0);
+		String restOfStatement = statement.substring(psn + 9).trim();
+		return "Uhh sure, I can help you with" + restOfStatement;
+	}
 
 	/**
 	 * Take a statement with "I want to <something>." and transform it into
