@@ -102,18 +102,6 @@ public class LevinBot
 			emotion--;
 		}
 
-		else if (findKeyword(statement, "I need help with") >= 0)
-		{
-			response = transformINeedHelpWithStatement(statement);
-			ArrayList<String> googleResults  = getDataFromGoogle(statement);
-			for (String val : googleResults)
-			{
-				if (val.indexOf("https://")>=0 && val.indexOf("google")==-1) {
-					response += val + " ";
-				}
-			}
-			emotion++;
-		}
 		else if (findKeyword(statement, "folwell") >= 0)
 		{
 			response = "Watch your backpacks, Mr. Folwell doesn't fall well.";
@@ -129,10 +117,16 @@ public class LevinBot
 			response = "Bye bye!";
 			emotion++;
 		}
-
 		// Response transforming I want to statement
+		else if (findKeyword(statement, "I need help with") >= 0)
+		{
+			response = transformINeedHelpWithStatement(statement);
+			System.out.println("Ask me a question");
+			emotion++;
+		}
 		else if (findKeyword(statement, "How do you", 0) >= 0)
 		{
+			System.out.println("Let me just look around for the answer to your question");
 			ArrayList<String> googleResults  = getDataFromGoogle(statement);
 			 for (String val : googleResults)
 					 {
@@ -179,7 +173,6 @@ public class LevinBot
 	public ArrayList<String> getDataFromGoogle(String statement)
     {
 
-		System.out.println("Let me just look around for the answer to your question");
     	Document doc = null;
         ArrayList<String> titleAndUrl= new ArrayList<>();
 
@@ -214,8 +207,12 @@ public class LevinBot
 					.length() - 1);
 		}
 		int psn = findKeyword (statement, "I need help with", 0);
-		String restOfStatement = statement.substring(psn + 9).trim();
-		return "Uhh sure, I can help you with" + restOfStatement;
+		String restOfStatement = statement.substring(psn + 16).trim().toLowerCase();
+		if(restOfStatement.indexOf("my")>=0)
+		{
+			restOfStatement = statement.substring(psn + 19).trim().toLowerCase();
+		}
+		return "Uhh sure, I can help you with " + restOfStatement;
 	}
 
 	/**
@@ -388,7 +385,7 @@ public class LevinBot
 
 	private String [] humanGreetings={"hello", "hi","sup","hola", "bonjour", "yo", "hey"};
 	private String [] randomNeutralResponses = {"Interesting, tell me more",
-			"Beep, boop, I'm Levinn",
+			"Beep, boop, I'm Levin-n",
 			"Do you really think so?",
 			"No Strings attached",
 			"It's all boolean to me.",

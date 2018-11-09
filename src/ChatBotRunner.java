@@ -33,7 +33,7 @@ public class ChatBotRunner
 		System.out.println("Now tell me, who would you like to talk to? Mr.Levin? A Useful Classmate? or A Useless Classmate?");
 		String useUrImagination = in.nextLine();
 		useUrImagination=useUrImagination.toLowerCase();
-		if (useUrImagination.equals("levin")||useUrImagination.equals("mr.levin"))
+		if (useUrImagination.equals("levin")||useUrImagination.equals("mr.levin")||useUrImagination.equals("mrlevin")||useUrImagination.equals("mr levin"))
 		{
 			String statement = "";
 			while (!statement.equals("Bye"))
@@ -52,7 +52,7 @@ public class ChatBotRunner
 
 			}
 		}
-		else if (useUrImagination.equals("usefulclassmate")||useUrImagination.equals("a useful classmate")||useUrImagination.equals("useful classmate")||useUrImagination.equals("a usefulclassmate"))
+		else if (useUrImagination.equals("usefulclassmate")||useUrImagination.equals("a useful classmate")||useUrImagination.equals("useful classmate")||useUrImagination.equals("a usefulclassmate")||useUrImagination.equals("a usefulclassmate")||useUrImagination.equals("useful"))
 		{
 			String statement = "";
 			while (!statement.equals("Bye")) {
@@ -68,7 +68,7 @@ public class ChatBotRunner
 
 			}
 		}
-		else if (useUrImagination.equals("uselessclassmate")||useUrImagination.equals("a useless classmate")||useUrImagination.equals("useless classmate")||useUrImagination.equals("a uselessclassmate"))
+		else if (useUrImagination.equals("uselessclassmate")||useUrImagination.equals("a useless classmate")||useUrImagination.equals("useless classmate")||useUrImagination.equals("a uselessclassmate")||useUrImagination.equals("useless"))
 		{
 			String statement = "";
 			while (!statement.equals("Bye"))
