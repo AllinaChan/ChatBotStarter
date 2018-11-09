@@ -98,6 +98,14 @@ public class UsefulClassmate
 		{
 			response = transformIDontStatement(statement);
 		}
+		else if (findKeyword(statement, "homework", 0) >=0)
+		{
+			response = transformHomeworkStatement(statement);
+		}
+		else if (findKeyword(statement, "date", 0) >=0)
+		{
+			response = transformDateStatement(statement);
+		}
 		else
 		{
 			response = getRandomResponse();
@@ -105,6 +113,49 @@ public class UsefulClassmate
 		
 		return response;
 	}
+
+	/**
+	 * Take a statement with "homework." and return
+	 * "The homework is to finish the entire codingbat java section, good luck soldier."
+	 * @return the statement
+	 */
+
+	private String transformDateStatement(String statement)
+	{
+		//  Remove the final period, if there is one
+		statement = statement.trim();
+		String lastChar = statement.substring(statement
+				.length() - 1);
+		if (lastChar.equals("."))
+		{
+			statement = statement.substring(0, statement
+					.length() - 1);
+		}
+		int psn = findKeyword (statement, "homework", 0);
+		return "The test date is at" + ;
+	}
+
+	/**
+	 * Take a statement with "date." and return a test date
+	 * "The test is on <a random date in november>."
+	 * @return the statement
+	 */
+
+	private String transformHomeworkStatement(String statement)
+	{
+		//  Remove the final period, if there is one
+		statement = statement.trim();
+		String lastChar = statement.substring(statement
+				.length() - 1);
+		if (lastChar.equals("."))
+		{
+			statement = statement.substring(0, statement
+					.length() - 1);
+		}
+		int psn = findKeyword (statement, "homework", 0);
+		return "The homework is to finish the entire CodingBat Java section, good luck soldier.";
+	}
+
 	/**
 	 * Take a statement with "I need <something>." and transform it into
 	 * "Why do you need <something>?"
