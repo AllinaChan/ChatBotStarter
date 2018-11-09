@@ -1,6 +1,6 @@
 import java.util.Random;
 import java.util.Scanner;
-
+// Author: Lin Yao Pan
 /**
  * A program to carry on conversations with a human user.
  * This version:
@@ -86,7 +86,7 @@ public class UselessClassmate
 
 		else if (findKeyword(statement, "no") >= 0)
 		{
-			response = "Yasso AFK. Say something before I act like my character and assassinate you.";
+			response = "Yasso AFK. Why are you saying no?";
                 	emotion--;
 		}
 		
@@ -115,7 +115,12 @@ public class UselessClassmate
 			response = "The only class I care about is assassin.";
 			emotion--;
 		}
-
+		else if (findKeyword(statement, "usefulclassmate") >=0)
+		{
+			response = "Why can't you be more like him/her? Lol";
+			emotion++;
+		}
+		// say almost anything and it'll make me mad :(. I'm playing League
 		if ( emotion <= -3)
 		{
 			System.out.println("Now you've made me mad");
@@ -340,5 +345,5 @@ public class UselessClassmate
 	};
 	private String [] randomAngryResponses = {"Arrgh just died. It's your fault!", "Crowd Control?! really?! How dare you! I'm the 17 year old piece of gold.", "Die rebel scum!"};
 	private String [] randomHappyResponses = {"Haha, Free kill.", "Today is a good day for Lintmaker", "You make me feel so young. You make me feel like spring has sprung."};
-	private String [] badWords = {"poop", "butt", "fart", "bastard", "buttface", "dummy", "chickenhead", "buttface", "evil", "Byrron", "stab"};
+	private String [] badWords = {"poop", "butt", "fart", "bastard", "airhead", "turkeyface", "buttface", "evil", "Byron", "suck"};
 }
