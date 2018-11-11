@@ -132,7 +132,7 @@ public class UsefulClassmate
 					.length() - 1);
 		}
 		int psn = findKeyword (statement, "homework", 0);
-		return "The test date is at" + ;
+		return "The test date is at";
 	}
 
 	/**
