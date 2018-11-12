@@ -1,7 +1,10 @@
 import java.util.Random;
 import java.util.Scanner;
+
 // Author: Lin Yao Pan
-/**
+
+
+/***
  * A program to carry on conversations with a human user.
  * This version:
  * @author Brooklyn Tech CS Department

@@ -50,7 +50,20 @@ public class LevinBot
 			//getResponse handles the user reply
 			System.out.println(getResponse(statement));
 
-
+			//additional dialogue
+			if(findKeyword(statement, "I need help") >= 0 && !(findKeyword(statement, "homework")>= 0))
+            {
+                System.out.println("Ask me the question");
+            }
+            else if (findKeyword(statement, "How do you", 0) >= 0)
+            {
+                System.out.println(" ");
+                System.out.println("As a teacher, I won't give you the answers...Pfft, figure it out yourself.");
+            }
+            else if(ifContainNegative(statement) && !(findKeyword(statement, "no i didnt")>=0))
+            {
+                System.out.println("Zeroes all around...*sigh*");
+            }
 		}
 
 	}
@@ -89,53 +102,60 @@ public class LevinBot
 	public String getResponse(String statement)
 	{
 		String response = "";
-
 		if (statement.length() == 0)
 		{
 			response = "Say something, please.";
 			emotion--;
 		}
 
-		else if (findKeyword(statement, "no") >= 0)
+		else if(ifContainNegative(statement) && !(findKeyword(statement, "no i didnt")>=0))
+        {
+            response="Then stop bothering me...I need to grade all of these poorly written code.";
+            emotion--;
+        }
+		else if (findKeyword(statement, "homework") >= 0 && !(findKeyword(statement,"how do you")>=0))
 		{
-			response = "Then why are you bothering me...I have to grade your class's poorly written codes. Zeroes all around... *sigh*";
-			emotion--;
-		}
-
-		else if (findKeyword(statement, "folwell") >= 0)
-		{
-			response = "Watch your backpacks, Mr. Folwell doesn't fall well.";
+			response = "What do you need help with on the homework?";
 			emotion++;
 		}
-		else if (findKeyword(statement, "test date") >= 0)
+        else if(findKeyword(statement, "code")>=0)
+        {
+            response="I'm pretty sure I taught you that today...";
+            emotion--;
+        }
+		else if (findKeyword(statement, "test date") >= 0 || findKeyword(statement, "test")>=0 ||findKeyword(statement, "when is the test")>=0)
 		{
 			response = "The test will be whenever you want it to be ;) Just don't make it the day before the AP test";
 			emotion++;
 		}
 		else if (findKeyword(statement, "bye") >= 0)
 		{
-			response = "Bye bye!";
+			response = "See you tomorrow. DO NOT be absent. My classes are fun uWu";
 			emotion++;
 		}
 		// Response transforming I want to statement
-		else if (findKeyword(statement, "I need help with") >= 0)
+		else if (findKeyword(statement, "I need help") >= 0 && !(findKeyword(statement, "homework")>= 0))
 		{
 			response = transformINeedHelpWithStatement(statement);
-			System.out.println("Ask me a question");
 			emotion++;
 		}
 		else if (findKeyword(statement, "How do you", 0) >= 0)
 		{
 			System.out.println("Let me just look around for the answer to your question");
 			ArrayList<String> googleResults  = getDataFromGoogle(statement);
+			int count =0;
 			 for (String val : googleResults)
 					 {
-					 	if (val.indexOf("https://")>=0 && val.indexOf("google")==-1) {
-							response += val + " ";
-						}
+					     if (count<5) {
+                             if (val.indexOf("https://") >= 0 && val.indexOf("google") == -1) {
+                                 response += val + " ";
+                                 count++;
+                             }
+                         }
 					 }
-					 System.out.println(" ");
-                     System.out.println("As a teacher, I won't give you the answers...Pfft, figure it out yourself.");
+					 System.out.println("");
+            System.out.println("Here's the top 5 search results");
+
 		}
 		else if (findKeyword(statement, "I want to", 0) >= 0)
 		{
@@ -153,6 +173,23 @@ public class LevinBot
 		return response;
 	}
 
+	//negative responses method
+    private String[] negativeUserResponses={"I don't know", "no",
+            "idk", "I dont know", "I dont need", "I don't need", "I dont really need",
+            "I don't really need" };
+
+    private boolean ifContainNegative(String statement)
+    {
+        boolean result=false;
+        for (String val: negativeUserResponses)
+        {
+            if(findKeyword(statement, val) >=0)
+            {
+                result=true;
+            }
+        }
+        return result;
+    }
 
 
 	//"How do you" search
@@ -182,10 +219,10 @@ public class LevinBot
             String title = doc.title();
             titleAndUrl.add("Title: " + title);
             Elements links = doc.select("a[href]");
-
+            int count=0;
             for (Element link:links) {
 
-                titleAndUrl.add("\nLink: " + link.attr("href"));
+                titleAndUrl.add("\n" +link.text()+":" + link.attr("href"));
             }
         } catch (IOException e)
         {
@@ -206,12 +243,16 @@ public class LevinBot
 			statement = statement.substring(0, statement
 					.length() - 1);
 		}
-		int psn = findKeyword (statement, "I need help with", 0);
-		String restOfStatement = statement.substring(psn + 16).trim().toLowerCase();
+		int psn = findKeyword (statement, "I need help");
+		String restOfStatement = statement.substring(psn + 11).trim().toLowerCase();
 		if(restOfStatement.indexOf("my")>=0)
 		{
-			restOfStatement = statement.substring(psn + 19).trim().toLowerCase();
+			restOfStatement = statement.substring(psn + 14).trim().toLowerCase();
 		}
+		if(restOfStatement.indexOf("with")>=0)
+        {
+            restOfStatement=statement.substring(psn + 16).trim().toLowerCase();
+        }
 		return "Uhh sure, I can help you with " + restOfStatement;
 	}
 
@@ -384,12 +425,12 @@ public class LevinBot
 	}
 
 	private String [] humanGreetings={"hello", "hi","sup","hola", "bonjour", "yo", "hey"};
-	private String [] randomNeutralResponses = {"Interesting, tell me more",
-			"Beep, boop, I'm Levin-n",
-			"Do you really think so?",
+	private String [] randomNeutralResponses = {"If you need help, just ask me how to do something",
+			"Beep, boop, I'm Levin-n. Tell me what you need help with",
+			"How are you?",
 			"No Strings attached",
 			"It's all boolean to me.",
-			"Remember to add a runner class to your code!",
+			"Just a quick reminder...remember to dd a runner class to your code!",
 			"Could you say that again?",
 	};
 	private String [] randomAngryResponses = {"WORK ON YOUR LAB...", "Harumph", "Rawr!", "Don't bother me.", "My wrath has been incurred"};

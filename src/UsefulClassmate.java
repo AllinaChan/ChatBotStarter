@@ -1,6 +1,8 @@
 import java.util.Random;
 import java.util.Scanner;
 
+//Author Byron Chen
+
 /**
  * A program to carry on conversations with a human user.
  * This version:
