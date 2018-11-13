@@ -223,7 +223,12 @@ public class UsefulClassmate
 
 	/**
 	 * Take a statement with "date." and return
-	 * The predicted test date base on curriculum entered
+	 * The predicted test date base on unit name entered
+	 * The statement will be the date of the test, the month and year matching the school year but date random.
+	 * @return the statement
+	 * If the user does not return a real unit name we ask the user if they need help
+	 * If the user needs help we continue on to try to help the user find its unit
+	 * The statement will be the best guess we can find for the user and the test date for it.
 	 * @return the statement
 	 */
 
@@ -265,24 +270,24 @@ public class UsefulClassmate
 					System.out.println("Does your unit introduce String or Scanner as the new variable?");
 					statement = Unit.nextLine();
 					statement = statement.toLowerCase();
-					if(findKeyword(statement, "String")>=0){
+					if (findKeyword(statement, "string") >= 0) {
 						System.out.println("Dos the string have [] in it?");
 						statement = Unit.nextLine();
 						statement = statement.toLowerCase();
-						if(findKeyword(statement, "yes")>=0){
+						if (findKeyword(statement, "yes") >= 0) {
 							System.out.println("You are on Arrays Unit.");
 							return "Test date is at 11/" + day + "/2018";
 						} else {
 							System.out.println("You are on Strings Unit.");
 							return "Test date is at 09/" + day + "/2018";
 						}
-				}
-					} else if(findKeyword(statement, "Scanner")>=0){
+					} else if (findKeyword(statement, "scanner") >= 0) {
 						System.out.println("You are on the Scanner Unit.");
 						return "Test date is at 10/" + day + "/2018";
 					} else {
-						return("You're not making sense today, we'll talk about this next time I guess.");
+						return ("You're not making sense today, we'll talk about this next time I guess.");
 					}
+				}
 				 if(findKeyword(statement, "no") >=0){
 					return("Ok, you're on your own on finding the unit.");
 				} else {
