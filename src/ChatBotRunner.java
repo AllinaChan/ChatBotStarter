@@ -69,8 +69,11 @@ public class ChatBotRunner
 				System.out.println("H-E-L-L-O! It's me M-R. L-E-V-I-N");
 				statement = in.nextLine();
 				chatbot.chatLoop(statement);
-				pickedBot=true;
-				pickedLevin = true;
+				pickedBot = true;
+				pickedLevin=true;
+				pickedUseful=false;
+				pickedUseless=false;
+				
 			} else if (botSelector.indexOf("usefulclassmate")>=0 || botSelector.indexOf("a useful classmate")>=0 || botSelector.indexOf("useful classmate")>=0 || botSelector.indexOf("a usefulclassmate")>=0 || botSelector.indexOf("a usefulclassmate")>=0 || botSelector.indexOf("useful")>=0) {
 				String statement = "";
 
@@ -80,8 +83,10 @@ public class ChatBotRunner
 
 				chatbot3.chatLoop(statement);
 
-				pickedUseful = true;
 				pickedBot = true;
+				pickedUseful=true;
+				pickedLevin=false;
+				pickedUseless=false;
 
 
 			} else if (botSelector.indexOf("uselessclassmate")>=0 || botSelector.indexOf("a useless classmate")>=0 || botSelector.indexOf("useless classmate")>=0 || botSelector.indexOf("a uselessclassmate")>=0 || botSelector.indexOf("useless")>=0) {
@@ -93,7 +98,11 @@ public class ChatBotRunner
 
 				chatbot2.chatLoop(statement);
 				pickedUseless = true;
-				pickedBot = true;
+				pickedBot=true;
+				pickedUseless=true;
+				pickedLevin=false;
+				pickedUseful=false;
+
 
 			} else {
 				String statement = "";
@@ -144,7 +153,9 @@ public class ChatBotRunner
 					statement = in.nextLine();
 
 					pickedBot = true;
-
+					pickedLevin=true;
+					pickedUseful=false;
+					pickedUseless=false;
 
 				//UsefulBotChanges
 			}else if (botChanger.equals("useful")||botChanger2.equals("useful")) {
@@ -159,6 +170,9 @@ public class ChatBotRunner
 					statement = in.nextLine();
 
 					pickedBot = true;
+					pickedUseful=true;
+					pickedLevin=false;
+					pickedUseless=false;
 
 
 				//UselessBotChanges
@@ -173,6 +187,9 @@ public class ChatBotRunner
 
 					statement = in.nextLine();
 					pickedBot=true;
+					pickedUseless=true;
+					pickedLevin=false;
+					pickedUseful=false;
 
 			}
 		}
