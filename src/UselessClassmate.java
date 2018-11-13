@@ -9,7 +9,12 @@ import java.util.Scanner;
  */
 public class UselessClassmate
 {
-	//emotion can alter the way our bot responds. Emotion can become more negative or positive over time.
+	/**
+	 * @param emotion can alter the way our bot responds. Emotion can become more negative or positive over time.
+	 * @param responseTemp just a additional storage for getResponse(statement) so I can call it in the runner
+	 * @param statementTemp Can't put fields in parameters so I used a different named variable to store statement
+	 */
+
 	int emotion = 0;
 
 	private String responseTemp;
@@ -42,7 +47,6 @@ public class UselessClassmate
 
 			statement = in.nextLine();
 			//getResponse handles the user reply
-			System.out.println(getResponse(statement));
 			statementTemp=statement;
 			if (findKeyword(statement, "usefulclassmate",0) >= 0||findKeyword(statement, "useful classmate",0) >= 0||findKeyword(statement, "usefulclass",0) >=0 ||findKeyword(statement, "useful class",0) >= 0||findKeyword(statement, "useful",0) >= 0||findKeyword(statement, "talk to useful",0) >= 0||findKeyword(statement, "talk to useful classmate",0) >= 0||findKeyword(statement, "talk to usefulclassmate",0) >= 0)
 		{
@@ -53,6 +57,8 @@ public class UselessClassmate
 			{
 				responseTemp=getResponse(statementTemp);
 				break;
+			}else{
+				System.out.println(getResponse(statement));
 			}
 
 		}
@@ -130,7 +136,7 @@ public class UselessClassmate
 		}
 		else if (findKeyword(statement, "help") >= 0)
 		{
-			response = "I told you to ask the other guy. What?";
+			response = "I told you to ask the useful dude. What?";
 			emotion--;
 		}
 		else if (findKeyword(statement, "class") >= 0)
@@ -140,7 +146,7 @@ public class UselessClassmate
 		}
 		else if (findKeyword(statement, "usefulclassmate") >=0)
 		{
-			response = "Why can't you be more like him/her? Lol";
+			response = "Why can't you be more like that kid? Lol";
 			emotion++;
 		}
 		// say almost anything and it'll make me mad :(. I'm playing League
@@ -186,6 +192,12 @@ public class UselessClassmate
 
 	//Broadcast Bot change
 
+	/**
+	 *
+	 * @param statement the inputted user statement
+	 * @return the trimmed statement with only "levin left
+	 */
+
 	public String botChangeLevin (String statement)
 	{
 		int psn=0;
@@ -213,6 +225,12 @@ public class UselessClassmate
 		String restOfStatement = statement.substring(psn, psn + 5).trim();
 		return restOfStatement;
 	}
+
+	/**
+	 *
+	 * @param statement the inputted user statement
+	 * @return the trimmed statement with only "useful" left
+	 */
 
 	public String botChangeUseful (String statement)
 	{

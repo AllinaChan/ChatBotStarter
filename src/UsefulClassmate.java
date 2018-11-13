@@ -9,7 +9,12 @@ import java.util.Scanner;
  */
 public class UsefulClassmate
 {
-	//emotion can alter the way our bot responds. Emotion can become more negative or positive over time.
+	/**
+	 * @param emotion can alter the way our bot responds. Emotion can become more negative or positive over time.
+	 * @param responseTemp just a additional storage for getResponse(statement) so I can call it in the runner
+	 * @param statementTemp Can't put fields in parameters so I used a different named variable to store statement
+	 */
+
 	int emotion = 0;
 	private String responseTemp;
 	private String statementTemp;
@@ -43,7 +48,7 @@ public class UsefulClassmate
 
 			statement = in.nextLine();
 			//getResponse handles the user reply
-			System.out.println(getResponse(statement));
+
 
 			statementTemp=statement;
 
@@ -57,6 +62,10 @@ public class UsefulClassmate
 				responseTemp=getResponse(statementTemp);
 				break;
 			}
+			else
+		 {
+			 System.out.println(getResponse(statement));
+		 }
 		}
 
 	}
@@ -151,6 +160,11 @@ public class UsefulClassmate
 	}
 
 	//Broadcast Bot change
+	/**
+	 *
+	 * @param statement the inputted user statement
+	 * @return the trimmed statement with only "useless" left
+	 */
 	public String botChangeUseless (String statement)
 	{
 		int psn=0;
@@ -173,6 +187,11 @@ public class UsefulClassmate
 		String restOfStatement = statement.substring(psn, psn + 7).trim();
 		return restOfStatement;
 	}
+	/**
+	 *
+	 * @param statement the inputted user statement
+	 * @return the trimmed statement with only "levin" left
+	 */
 	public String botChangeLevin (String statement)
         {
             int psn=0;
