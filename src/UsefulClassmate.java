@@ -270,7 +270,7 @@ public class UsefulClassmate
 						statement = Unit.nextLine();
 						statement = statement.toLowerCase();
 						if(findKeyword(statement, "yes")>=0){
-							System.out.println("You are on Arrys Unit.");
+							System.out.println("You are on Arrays Unit.");
 							return "Test date is at 11/" + day + "/2018";
 						} else {
 							System.out.println("You are on Strings Unit.");
