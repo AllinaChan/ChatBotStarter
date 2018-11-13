@@ -113,6 +113,9 @@ public class ChatBotRunner
 		//If user wants to switch bots
 		while (pickedBot==true)
 		{
+			botChanger="";
+			botChanger2="";
+			botChanger3="";
 			//getResponse methods gets the trimmed response of each statement in the respective bots
 			while (pickedLevin==true)
 			{
@@ -146,11 +149,11 @@ public class ChatBotRunner
 
 
 					System.out.println("H-E-L-L-O! It's me M-R. L-E-V-I-N");
-					statement = in.nextLine();
+				    statement = in.nextLine();
 					chatbot.chatLoop(statement);
 
 
-					statement = in.nextLine();
+
 
 					pickedBot = true;
 					pickedLevin=true;
@@ -167,7 +170,7 @@ public class ChatBotRunner
 					chatbot3.chatLoop(statement);
 
 
-					statement = in.nextLine();
+
 
 					pickedBot = true;
 					pickedUseful=true;
@@ -185,7 +188,7 @@ public class ChatBotRunner
 					chatbot2.chatLoop(statement);
 
 
-					statement = in.nextLine();
+
 					pickedBot=true;
 					pickedUseless=true;
 					pickedLevin=false;

@@ -158,13 +158,13 @@ public class UselessClassmate
 			emotion = 0;
 		}
 		// Response transforming I want to statement
-		else if (findKeyword(statement, "usefulclassmate",0) >= 0||findKeyword(statement, "useful classmate",0) >= 0||findKeyword(statement, "usefulclass",0) >=0 ||findKeyword(statement, "useful class",0) >= 0||findKeyword(statement, "useful",0) >= 0||findKeyword(statement, "talk to useful",0) >= 0||findKeyword(statement, "talk to useful classmate",0) >= 0||findKeyword(statement, "talk to usefulclassmate",0) >= 0)
+		else if (findKeyword(statement, "useful classmate",0) >= 0||findKeyword(statement, "usefulclass",0) >=0 ||findKeyword(statement, "useful class",0) >= 0||findKeyword(statement, "useful",0) >= 0||findKeyword(statement, "talk to useful",0) >= 0||findKeyword(statement, "talk to useful classmate",0) >= 0||findKeyword(statement, "talk to usefulclassmate",0) >= 0)
 		{
 			response = botChangeUseful(statement);
 			System.out.println("Walking up to the class's useful classmate...");
 			emotion++;
 		}
-		else if (findKeyword(statement, "mr.levin",0) >= 0||findKeyword(statement, "levin",0) >= 0||findKeyword(statement, "mr levin",0) >= 0||findKeyword(statement, "mr. levin",0) >=0 ||findKeyword(statement, "mrlevin",0) >= 0||findKeyword(statement, "talk to levin",0) >= 0||findKeyword(statement, "talk to mrlevin",0) >= 0||findKeyword(statement, "talk to mr. levin",0) >= 0||findKeyword(statement, "talk to mr.levin",0) >= 0)
+		else if (findKeyword(statement, "mr.levin",0) >= 0||findKeyword(statement, "mr levin",0) >= 0||findKeyword(statement, "mr. levin",0) >=0 ||findKeyword(statement, "mrlevin",0) >= 0||findKeyword(statement, "talk to levin",0) >= 0||findKeyword(statement, "talk to mrlevin",0) >= 0||findKeyword(statement, "talk to mr. levin",0) >= 0||findKeyword(statement, "talk to mr.levin",0) >= 0)
 		{
 			response = botChangeLevin(statement);
 			System.out.println("Walking up to the class's beautiful teacher...");
