@@ -8,18 +8,31 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-//Author: Allen Chen
 
 /**
  * A program to carry on conversations with a human user.
  * This version:
- * @author Brooklyn Tech CS Department
+ * @author Allen Chen
  * @version September 2018
  */
 public class LevinBot
 {
 	//emotion can alter the way our bot responds. Emotion can become more negative or positive over time.
 	int emotion = 0;
+	private String responseTemp;
+	private String statementTemp;
+	LevinBot(){
+		this.responseTemp=responseTemp;
+		this.statementTemp=statementTemp;
+	}
+	public String getResponse()
+	{
+		return responseTemp;
+	}
+	public String getStatement()
+	{
+		return statementTemp;
+	}
 
 	/**
 	 * Runs the conversation for this particular chatbot, should allow switching to other chatbots.
@@ -47,6 +60,7 @@ public class LevinBot
 
 
 			statement = in.nextLine();
+			statementTemp=statement;
 			//getResponse handles the user reply
 			System.out.println(getResponse(statement));
 
@@ -64,6 +78,16 @@ public class LevinBot
             {
                 System.out.println("Zeroes all around...*sigh*");
             }
+			else if (findKeyword(statement, "usefulclassmate",0) >= 0||findKeyword(statement, "useful classmate",0) >= 0||findKeyword(statement, "usefulclass",0) >=0 ||findKeyword(statement, "useful class",0) >= 0||findKeyword(statement, "useful",0) >= 0||findKeyword(statement, "talk to useful",0) >= 0||findKeyword(statement, "talk to useful classmate",0) >= 0||findKeyword(statement, "talk to usefulclassmate",0) >= 0)
+			{
+				responseTemp=getResponse(statementTemp);
+				break;
+			}
+			else if (findKeyword(statement, "uselessclassmate",0) >= 0||findKeyword(statement, "useless classmate",0) >= 0||findKeyword(statement, "uselessclass",0) >=0 ||findKeyword(statement, "useless class",0) >= 0||findKeyword(statement, "useless",0) >= 0||findKeyword(statement, "talk to useless classmate",0) >= 0||findKeyword(statement, "talk to useless",0) >= 0||findKeyword(statement, "talk to uselessclassmate",0) >= 0)
+			{
+				responseTemp=getResponse(statementTemp);
+				break;
+			}
 		}
 
 	}
@@ -101,7 +125,7 @@ public class LevinBot
 	 */
 	public String getResponse(String statement)
 	{
-		String response = "";
+		String response="";
 		if (statement.length() == 0)
 		{
 			response = "Say something, please.";
@@ -117,6 +141,11 @@ public class LevinBot
 		{
 			response = "What do you need help with on the homework?";
 			emotion++;
+		}
+		else if(findKeyword(statement, "fine")>=0||findKeyword(statement, "well")>=0|findKeyword(statement, "good")>=0)
+		{
+			response="That's good! How can be of service";
+			emotion--;
 		}
         else if(findKeyword(statement, "code")>=0)
         {
@@ -154,8 +183,21 @@ public class LevinBot
                          }
 					 }
 					 System.out.println("");
-            System.out.println("Here's the top 5 search results");
+            System.out.println("Here are the top 5 search results I got from my secret source.");
 
+		}
+		//putting change to useful classmate makes it bypass the "I want to" else if statements. Users could say "I want to talk to useful classmate" which creates a discrepancy
+		else if (findKeyword(statement, "usefulclassmate",0) >= 0||findKeyword(statement, "useful classmate",0) >= 0||findKeyword(statement, "usefulclass",0) >=0 ||findKeyword(statement, "useful class",0) >= 0||findKeyword(statement, "useful",0) >= 0||findKeyword(statement, "talk to useful",0) >= 0||findKeyword(statement, "talk to useful classmate",0) >= 0||findKeyword(statement, "talk to usefulclassmate",0) >= 0)
+		{
+			response = botChangeUseful(statement);
+			System.out.println("Walking up to the class's useful classmate...");
+			emotion++;
+		}
+		else if (findKeyword(statement, "uselessclassmate",0) >= 0||findKeyword(statement, "useless classmate",0) >= 0||findKeyword(statement, "uselessclass",0) >=0 ||findKeyword(statement, "useless class",0) >= 0||findKeyword(statement, "useless",0) >= 0||findKeyword(statement, "talk to useless classmate",0) >= 0||findKeyword(statement, "talk to useless",0) >= 0||findKeyword(statement, "talk to uselessclassmate",0) >= 0)
+		{
+			response = botChangeUseless(statement);
+			System.out.println("Walking up to the class's useless classmate...");
+			emotion++;
 		}
 		else if (findKeyword(statement, "I want to", 0) >= 0)
 		{
@@ -165,18 +207,18 @@ public class LevinBot
 		{
 			response = transformIWantStatement(statement);
 		}
+
 		else
 		{
 			response = getRandomResponse();
 		}
-
 		return response;
 	}
 
 	//negative responses method
     private String[] negativeUserResponses={"I don't know", "no",
-            "idk", "I dont know", "I dont need", "I don't need", "I dont really need",
-            "I don't really need" };
+            "idk", "I dont know", "I dont need", "I don't need", "I dont really need","I dont want help", "I don't want help",
+            "I don't really need", "nothing" };
 
     private boolean ifContainNegative(String statement)
     {
@@ -190,6 +232,56 @@ public class LevinBot
         }
         return result;
     }
+
+
+    //Broadcast Bot change
+	public String botChangeUseless (String statement)
+	{
+		int psn=0;
+		statement = statement.trim();
+		String lastChar = statement.substring(statement.length() - 1);
+		if (lastChar.equals(".") || lastChar.equals("?") || lastChar.equals("!")) {
+			statement = statement.substring(0, statement.length() - 1);
+		}
+		if (findKeyword(statement,"uselessclassmate")>=0)
+		{
+			psn = findKeyword(statement, "uselessclassmate", 0);
+		}
+		else if(findKeyword(statement,"useless classmate")>=0) {
+			psn = findKeyword(statement, "useless", 0);
+		}
+		else if (findKeyword(statement,"useless")>=0)
+		{
+			psn = findKeyword(statement, "useless", 0);
+		}
+		String restOfStatement = statement.substring(psn, psn + 7).trim();
+		return restOfStatement;
+	}
+
+	public String botChangeUseful (String statement)
+	{
+		int psn=0;
+		statement = statement.trim();
+		String lastChar = statement.substring(statement.length() - 1);
+		if (lastChar.equals(".") || lastChar.equals("?") || lastChar.equals("!")) {
+			statement = statement.substring(0, statement.length() - 1);
+		}
+		if (findKeyword(statement,"usefulclassmate")>=0)
+		{
+			psn = findKeyword(statement, "usefulclassmate", 0);
+		}
+		else if(findKeyword(statement,"useful classmate")>=0) {
+			psn = findKeyword(statement, "useful", 0);
+		}
+		else if (findKeyword(statement,"useful")>=0)
+		{
+			psn = findKeyword(statement, "useful", 0);
+		}
+		String restOfStatement = statement.substring(psn, psn + 6).trim();
+		return restOfStatement;
+	}
+
+
 
 
 	//"How do you" search

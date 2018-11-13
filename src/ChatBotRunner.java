@@ -10,10 +10,10 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import java.util.concurrent.TimeUnit;
 
-// Authors: Allen Chen, Lin Yao Pan, byron
+
 /**
  * A simple class to run our chatbot teams.
- * @author Brooklyn Tech CS Department
+ * @author Allen Chen, Lin Yao Pan, Byron
  * @version September 2018
  */
 public class ChatBotRunner
@@ -39,12 +39,90 @@ public class ChatBotRunner
 		}
 		//makes sure user picked a bot
 		boolean pickedBot=false;
+		boolean pickedLevin=false;
+		boolean pickedUseful=false;
+		boolean pickedUseless=false;
+		String botSelector="";
+		String botChanger = "";
+		String botChanger2="";
+		String botChanger3="";
 		while (pickedBot == false) {
-			String useUrImagination = in.nextLine();
-			useUrImagination = useUrImagination.toLowerCase();
-			if (useUrImagination.equals("levin") || useUrImagination.equals("mr.levin") || useUrImagination.equals("mrlevin") || useUrImagination.equals("mr levin")) {
+			botSelector = in.nextLine();
+			botSelector = botSelector.toLowerCase();
+			if (botSelector.equals("levin") || botSelector.equals("mr.levin") || botSelector.equals("mrlevin") || botSelector.equals("mr levin")) {
+
 				String statement = "";
-				while (!statement.equals("Bye")) {
+
+				//Use Logic to control which chatbot is handling the conversation\
+				//This example has only chatbot
+
+				System.out.println("H-E-L-L-O! It's me M-R. L-E-V-I-N");
+				statement = in.nextLine();
+				chatbot.chatLoop(statement);
+				pickedBot=true;
+				pickedLevin = true;
+			} else if (botSelector.equals("usefulclassmate") || botSelector.equals("a useful classmate") || botSelector.equals("useful classmate") || botSelector.equals("a usefulclassmate") || botSelector.equals("a usefulclassmate") || botSelector.equals("useful")) {
+				String statement = "";
+
+				//Use Logic to control which chatbot is handling the conversation\
+				//This example has only chatbot
+
+
+				chatbot3.chatLoop(statement);
+				statement = in.nextLine();
+				pickedUseful = true;
+				pickedBot = true;
+
+
+			} else if (botSelector.equals("uselessclassmate") || botSelector.equals("a useless classmate") || botSelector.equals("useless classmate") || botSelector.equals("a uselessclassmate") || botSelector.equals("useless")) {
+				String statement = "";
+
+				//Use Logic to control which chatbot is handling the conversation\
+				//This example has only chatbot
+
+
+				chatbot2.chatLoop(statement);
+				statement = in.nextLine();
+				pickedUseless = true;
+				pickedBot = true;
+
+			} else {
+				String statement = "";
+				System.out.println("Please choose who to talk to!");
+			}
+		}
+
+		//If user wants to switch bots
+		while (pickedBot==true)
+		{
+
+			while (pickedLevin==true)
+			{
+				botChanger=chatbot.getResponse().toLowerCase();
+				if (botChanger.equals("useless")||botChanger.equals("useful")) {
+					break;
+				}
+			}
+			while (pickedUseless==true)
+			{
+				botChanger2=chatbot2.getResponse().toLowerCase();
+				if (botChanger2.equals("levin")||botChanger2.equals("useful")) {
+				break;
+				}
+			}
+			while (pickedUseful==true)
+			{
+				botChanger3=chatbot3.getResponse().toLowerCase();
+				if (botChanger3.equals("levin")||botChanger3.equals("useless")) {
+					break;
+				}
+			}
+
+
+
+			//LevinBotChanges
+			if (botChanger2.equals("levin")||botChanger3.equals("levin")) {
+					String statement="";
 					//Use Logic to control which chatbot is handling the conversation\
 					//This example has only chatbot
 
@@ -56,11 +134,12 @@ public class ChatBotRunner
 
 					statement = in.nextLine();
 
-				pickedBot=true;
-				}
-			} else if (useUrImagination.equals("usefulclassmate") || useUrImagination.equals("a useful classmate") || useUrImagination.equals("useful classmate") || useUrImagination.equals("a usefulclassmate") || useUrImagination.equals("a usefulclassmate") || useUrImagination.equals("useful")) {
-				String statement = "";
-				while (!statement.equals("Bye")) {
+					pickedBot = true;
+
+
+				//UsefulBotChanges
+			}else if (botChanger.equals("useful")||botChanger2.equals("useful")) {
+				String statement="";
 					//Use Logic to control which chatbot is handling the conversation\
 					//This example has only chatbot
 
@@ -70,11 +149,12 @@ public class ChatBotRunner
 
 					statement = in.nextLine();
 
-					pickedBot=true;
-				}
-			} else if (useUrImagination.equals("uselessclassmate") || useUrImagination.equals("a useless classmate") || useUrImagination.equals("useless classmate") || useUrImagination.equals("a uselessclassmate") || useUrImagination.equals("useless")) {
-				String statement = "";
-				while (!statement.equals("Bye")) {
+					pickedBot = true;
+
+
+				//UselessBotChanges
+			}else if (botChanger.equals("useless")||botChanger3.equals("useless")) {
+				String statement="";
 					//Use Logic to control which chatbot is handling the conversation\
 					//This example has only chatbot
 
@@ -84,15 +164,8 @@ public class ChatBotRunner
 
 					statement = in.nextLine();
 					pickedBot=true;
-				}
-			} else {
-				String statement = "";
-				System.out.println("Please choose who to talk to!");
-			}
-		}
-		if (pickedBot==true)
-		{
 
+			}
 		}
 	}
 }
