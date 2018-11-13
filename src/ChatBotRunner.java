@@ -38,6 +38,16 @@ public class ChatBotRunner
 			System.err.println(e.getMessage());
 		}
 		//makes sure user picked a bot
+		/**
+		 * @param pickedBot is the boolean for if the user has selected a bot
+		 * @param  pickedLevin is the boolean for if the user has selected LevinBot
+		 * @param pickedUseful is the boolean for if the user has selected Useful Classmate
+		 * @param pickedUseless is the boolean for if the user has selected Useless Classmate
+		 * @param botSelector is the user input for the bot they want to select
+		 * @param botChanger is the user inputted statement trimmed to what bot the user want to switch to while in LevinBot
+		 * @param botChanger2 is the user inputted statement trimmed to what bot the user want to switch to while in UselessClassmate Bot
+		 * @param botChanger3 is the user inputted statement trimmed to what bot the user want to switch to while in UsefulClassmate Bot
+		 */
 		boolean pickedBot=false;
 		boolean pickedLevin=false;
 		boolean pickedUseful=false;
@@ -49,7 +59,7 @@ public class ChatBotRunner
 		while (pickedBot == false) {
 			botSelector = in.nextLine();
 			botSelector = botSelector.toLowerCase();
-			if (botSelector.equals("levin") || botSelector.equals("mr.levin") || botSelector.equals("mrlevin") || botSelector.equals("mr levin")) {
+			if (botSelector.indexOf("levin")>=0 || botSelector.indexOf("mr.levin")>=0 || botSelector.indexOf("mrlevin")>=0 || botSelector.indexOf("mr levin")>=0) {
 
 				String statement = "";
 
@@ -61,7 +71,7 @@ public class ChatBotRunner
 				chatbot.chatLoop(statement);
 				pickedBot=true;
 				pickedLevin = true;
-			} else if (botSelector.equals("usefulclassmate") || botSelector.equals("a useful classmate") || botSelector.equals("useful classmate") || botSelector.equals("a usefulclassmate") || botSelector.equals("a usefulclassmate") || botSelector.equals("useful")) {
+			} else if (botSelector.indexOf("usefulclassmate")>=0 || botSelector.indexOf("a useful classmate")>=0 || botSelector.indexOf("useful classmate")>=0 || botSelector.indexOf("a usefulclassmate")>=0 || botSelector.indexOf("a usefulclassmate")>=0 || botSelector.indexOf("useful")>=0) {
 				String statement = "";
 
 				//Use Logic to control which chatbot is handling the conversation\
@@ -69,12 +79,12 @@ public class ChatBotRunner
 
 
 				chatbot3.chatLoop(statement);
-				statement = in.nextLine();
+
 				pickedUseful = true;
 				pickedBot = true;
 
 
-			} else if (botSelector.equals("uselessclassmate") || botSelector.equals("a useless classmate") || botSelector.equals("useless classmate") || botSelector.equals("a uselessclassmate") || botSelector.equals("useless")) {
+			} else if (botSelector.indexOf("uselessclassmate")>=0 || botSelector.indexOf("a useless classmate")>=0 || botSelector.indexOf("useless classmate")>=0 || botSelector.indexOf("a uselessclassmate")>=0 || botSelector.indexOf("useless")>=0) {
 				String statement = "";
 
 				//Use Logic to control which chatbot is handling the conversation\
@@ -82,7 +92,6 @@ public class ChatBotRunner
 
 
 				chatbot2.chatLoop(statement);
-				statement = in.nextLine();
 				pickedUseless = true;
 				pickedBot = true;
 
@@ -95,7 +104,7 @@ public class ChatBotRunner
 		//If user wants to switch bots
 		while (pickedBot==true)
 		{
-
+			//getResponse methods gets the trimmed response of each statement in the respective bots
 			while (pickedLevin==true)
 			{
 				botChanger=chatbot.getResponse().toLowerCase();
