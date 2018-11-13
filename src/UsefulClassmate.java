@@ -138,9 +138,9 @@ public class UsefulClassmate
 		{
 			response = transformHomeworkStatement(statement);
 		}
-		else if (findKeyword(statement, "date", 0) >=0)
+		else if (findKeyword(statement, "test date", 0) >=0)
 		{
-			response = transformDateStatement(statement);
+			response = transformtestDateStatement(statement);
 		}
 		else
 		{
@@ -203,12 +203,12 @@ public class UsefulClassmate
         }
 
 	/**
-	 * Take a statement with "homework." and return
-	 * "The homework is to finish the entire codingbat java section, good luck soldier."
+	 * Take a statement with "date." and return
+	 * The predicted test date base on curriculum entered
 	 * @return the statement
 	 */
 
-	private String transformDateStatement(String statement)
+	private String transformtestDateStatement(String statement)
 	{
 		//  Remove the final period, if there is one
 		statement = statement.trim();
@@ -219,13 +219,64 @@ public class UsefulClassmate
 			statement = statement.substring(0, statement
 					.length() - 1);
 		}
-		int psn = findKeyword (statement, "homework", 0);
-		return "The test date is at";
+		int psn = findKeyword (statement, "test date", 0);
+		System.out.println("Which Unit are we at at? ");
+		System.out.println("Strings, Scanners, or Arrays?");
+		Scanner Unit  = new Scanner (System.in);
+		statement = Unit.nextLine();
+		int day = (int)Math.random()*29+1;
+		String result = "";
+		if (findKeyword(statement, "Strings") >=0)
+		{
+			result = "Test date is at 09/" + day + "/2018";
+		}
+		else if (findKeyword(statement, "Scanners") >=0)
+		{
+			result = "Test date is at 10/" + day+ "/2018";
+		}
+		else if (findKeyword(statement, "Arrays") >=0)
+		{
+			result = "Test date is at 11/" + day + "/2018";
+		} else
+			{
+				System.out.println("Do you need help finding your unit?");
+				statement = Unit.nextLine();
+				statement = statement.toLowerCase();
+				if(findKeyword(statement, "yes") >=0) {
+					System.out.println("Does your unit introduce String or Scanner as the new variable?");
+					statement = Unit.nextLine();
+					statement = statement.toLowerCase();
+					if(findKeyword(statement, "String")>=0){
+						System.out.println("Dos the string have [] in it?");
+						statement = Unit.nextLine();
+						statement = statement.toLowerCase();
+						if(findKeyword(statement, "yes")>=0){
+							System.out.println("You are on Arrys Unit.");
+							return "Test date is at 11/" + day + "/2018";
+						} else {
+							System.out.println("You are on Strings Unit.");
+							return "Test date is at 09/" + day + "/2018";
+						}
+				}
+					} else if(findKeyword(statement, "Scanner")>=0){
+						System.out.println("You are on the Scanner Unit.");
+						return "Test date is at 10/" + day + "/2018";
+					} else {
+						return("You're not making sense today, we'll talk about this next time I guess.");
+					}
+				 if(findKeyword(statement, "no") >=0){
+					return("Ok, you're on your own on finding the unit.");
+				} else {
+					return("You're not making sense today, we'll talk about this next time I guess.");
+				}
+		}
+		return result;
 	}
 
 	/**
-	 * Take a statement with "date." and return a test date
-	 * "The test is on <a random date in november>."
+	 * Take a statement with "homework." and return
+	 * "The homework is to finish the entire CodingBat Java section, good luck soldier."
+	 * @param statement the user statement, assumed to contain "homework"
 	 * @return the statement
 	 */
 
@@ -448,5 +499,6 @@ public class UsefulClassmate
 	private String [] randomAngryResponses = {"Come on dude. I did that in 5 minutes.", "Did you really just ask me that?", "I don't usually have anger issues, but now I do."};
 	private String [] randomHappyResponses = {"Whats the problem on?", "Looking good so far.", "Good job mate.", "Yep, that's right."};
 	private String [] giveUp = {"yikes", "fuck", "ugh", "sigh"};
+
 	
 }
