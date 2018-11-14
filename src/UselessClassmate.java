@@ -115,15 +115,10 @@ public class UselessClassmate
 
 		else if (findKeyword(statement, "no") >= 0)
 		{
-			response = "Yasso AFK. Why are you saying no?";
+			response = "You should have Nown this would happen";
                 	emotion--;
 		}
-		
-		else if (findKeyword(statement, "levin") >= 0)
-		{
-			response = "I need a little levin tonight myself.";
-			emotion++;
-		}
+
 		else if (findKeyword(statement, "league") >= 0)
 		{
 			response = "Trying to get to diamond in ranked. I'm in a league of my own here.";
@@ -144,11 +139,22 @@ public class UselessClassmate
 			response = "The only class I care about is assassin.";
 			emotion--;
 		}
-		else if (findKeyword(statement, "usefulclassmate") >=0)
+		else if (findKeyword(statement, "homework") >= 0)
 		{
-			response = "Why can't you be more like that kid? Lol";
-			emotion++;
+			response = "Sorry, I'm going to go work on getting them skins.";
+			emotion--;
 		}
+		else if (findKeyword(statement, "test date") >= 0)
+		{
+			response = "I don't want to get testy, but I have a date with ranked.";
+			emotion--;
+		}
+		else if (findKeyword(statement,"I don't get") >=0)
+		{
+			response = "Then you should've been paying attention so that you could play league later.";
+		}
+
+
 		// say almost anything and it'll make me mad :(. I'm playing League
 		if ( emotion <= -3)
 		{
@@ -177,7 +183,11 @@ public class UselessClassmate
 		else if (findKeyword(statement, "How could you",0) >= 0)
 		{
 			response = transformHowCouldYouStatement(statement);
-		}	
+		}
+		else if (findKeyword(statement, "I feel",0) >= 0)
+		{
+			response = transformIfeelStatement(statement);
+		}
 		else if(response.length() == 0)
 		{
 			response = getRandomResponse();
@@ -185,6 +195,10 @@ public class UselessClassmate
 		else if (findKeyword(statement, "I want",0) >= 0)
 		{
 			response = transformIWantStatement(statement) ;
+		}
+		else if (findKeyword(statement, "I need",0) >= 0)
+		{
+			response = transformINeedNounStatement(statement) ;
 		}
 
 		return response;
@@ -274,7 +288,32 @@ public class UselessClassmate
 		String restOfStatement = statement.substring(psn + 9).trim();
 		return "Why do you want to " + restOfStatement + "?";
 	}
-
+	private String transformIfeelStatement(String statement)
+	{
+		//  Remove the final period, if there is one
+		statement = statement.trim();
+		String lastChar = statement.substring(statement.length() - 1);
+		if (lastChar.equals("."))
+		{
+			statement = statement.substring(0, statement.length() - 1);
+		}
+		int psn = findKeyword (statement, "I feel", 0);
+		String restOfStatement = statement.substring(psn + 6).trim();
+		return "Whenever I feel " + restOfStatement + "I play league. Try it out" + ".";
+	}
+	private String transformINeedNounStatement(String statement)
+	{
+		//  Remove the final period, if there is one
+		statement = statement.trim();
+		String lastChar = statement.substring(statement.length() - 1);
+		if (lastChar.equals("."))
+		{
+			statement = statement.substring(0, statement.length() - 1);
+		}
+		int psn = findKeyword (statement, "I need", 0);
+		String restOfStatement = statement.substring(psn + 6).trim();
+		return "If you wanted " + restOfStatement + "you should've spoken to someone useful" + ".";
+	}
 	/**
 	 * When you say how could you something, it transforms it into "I could something as many times as I want.
 	 * @param statement what is typed, which would have How could you.
