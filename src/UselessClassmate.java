@@ -170,7 +170,7 @@ public class UselessClassmate
 			System.out.println("Walking up to the class's useful classmate...");
 			emotion++;
 		}
-		else if (findKeyword(statement, "mr.levin",0) >= 0||findKeyword(statement, "mr levin",0) >= 0||findKeyword(statement, "mr. levin",0) >=0 ||findKeyword(statement, "mrlevin",0) >= 0||findKeyword(statement, "talk to levin",0) >= 0||findKeyword(statement, "talk to mrlevin",0) >= 0||findKeyword(statement, "talk to mr. levin",0) >= 0||findKeyword(statement, "talk to mr.levin",0) >= 0)
+		else if (findKeyword(statement, "mr.levin",0) >= 0||findKeyword(statement, "mr levin",0) >= 0 ||findKeyword(statement, "levin",0) >= 0 ||findKeyword(statement, "mr. levin",0) >=0 ||findKeyword(statement, "mrlevin",0) >= 0||findKeyword(statement, "talk to levin",0) >= 0||findKeyword(statement, "talk to mrlevin",0) >= 0||findKeyword(statement, "talk to mr. levin",0) >= 0||findKeyword(statement, "talk to mr.levin",0) >= 0)
 		{
 			response = botChangeLevin(statement);
 			System.out.println("Walking up to the class's beautiful teacher...");
