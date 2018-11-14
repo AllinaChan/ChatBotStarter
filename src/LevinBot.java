@@ -200,6 +200,11 @@ public class LevinBot
 			response = transformDontGiveMeStatement(statement);
 			emotion++;
 		}
+		else if (findKeyword(statement, "why are you") >= 0)
+		{
+			response = transformWhyAreYouStatement(statement);
+			emotion++;
+		}
 		else if (findKeyword(statement, "How do you", 0) >= 0)
 		{
 			//ONly takes the top 5 result from the arraylist of all the search results
@@ -402,6 +407,11 @@ public class LevinBot
         return titleAndUrl;
     }
 
+	/**
+	 *
+	 * @param statement the inputted user statement
+	 * @return uses jsoup the parsing the html of a google search and then uses it to create an arraylist of search results
+	 */
 	public ArrayList<String> getDataFromGoogleIWantToKnow(String statement)
 	{
 
